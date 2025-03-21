@@ -4,6 +4,7 @@ import 'package:e_commerce_app/core/helpers/dialogs.dart';
 import 'package:e_commerce_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:e_commerce_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:e_commerce_app/features/auth/presentation/widgets/custom_text_form_feild.dart';
+import 'package:e_commerce_app/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +28,7 @@ class AuthView extends StatelessWidget {
 
         if (state is AuthSuccess) {
           LoadingDialog.hide(context);
-          // Navigate to home
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomeScreen()));
         }
 
         log("AuthView - BlocListener - state: $state");

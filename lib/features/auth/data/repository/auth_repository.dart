@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:e_commerce_app/features/user/data/data_sources/user_local_data_source.dart';
+import 'package:e_commerce_app/features/user/data/models/user_model.dart';
 
 class AuthRepository {
   final AuthRemoteDataSource _authRemoteDataSource;
@@ -15,7 +16,8 @@ class AuthRepository {
     required String email,
     required String password,
   }) async {
-    final user = await _authRemoteDataSource.login(email: "email", password: "password");
-    // Caching user data here
+    final userJson = await _authRemoteDataSource.login(email: email, password: password);
+    final user = UserModel.fromJson(userJson);
+    _userLocalDataSource.saveUser(user: user.toJson());
   }
 }
