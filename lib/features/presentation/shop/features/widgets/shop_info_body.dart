@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app2/core/data/services/get_all_category.dart';
+import 'package:store_app2/core/utils/text_style.dart';
+import 'package:store_app2/features/presentation/shop/features/controller/categories_cubit/categories_cubit.dart';
+import 'package:store_app2/features/presentation/shop/features/widgets/all_categories_list_view_builder.dart';
+
+class AllCategoriesInfoBody extends StatelessWidget {
+  const AllCategoriesInfoBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          CategoriesCubit(getAllCategory: GetAllCategoryService())
+            ..fetchCategories(),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.arrow_back_ios_new),
+          ),
+          title: Text('Categories', style: Style.textStyleAppBarBlack),
+          actions: [
+            IconButton(onPressed: () {}, icon: Icon(Icons.search, size: 30)),
+          ],
+        ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 15,
+                ),
+                child: Center(
+                  child: SizedBox(
+                    height: 48,
+                    width: 343,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('VIEW ALL ITEMS'),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 4),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text('Choose category', style: Style.textStyle14grey),
+              ),
+              SizedBox(height: 30),
+              AllCategoriesListViewBuilder(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
