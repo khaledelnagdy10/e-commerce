@@ -40,7 +40,7 @@ class AllCategoriesListViewBuilder extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) {
                               return CategoryView(
-                                categoryName: state.allCategories[i].slug,
+                                categoryName: state.allCategories[i].name,
                               );
                             },
                           ),

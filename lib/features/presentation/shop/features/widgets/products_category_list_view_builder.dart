@@ -1,15 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:store_app2/core/utils/Favourite%20cubit/favorite_cubit.dart';
+import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/core/utils/text_style.dart';
-import 'package:store_app2/core/utils/widgets/error_model.dart';
-import 'package:store_app2/core/utils/widgets/image_assets.dart';
+import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
 import 'package:store_app2/features/presentation/shop/features/controller/category_product_cubit/category_product_cubit.dart';
+import 'package:store_app2/features/presentation/shop/features/widgets/product_info.dart';
 
 class ProductsCategoryListViewBuilder extends StatefulWidget {
-  ProductsCategoryListViewBuilder({super.key});
-
+  const ProductsCategoryListViewBuilder({super.key, required this.sortType});
+  final int sortType;
   @override
   State<ProductsCategoryListViewBuilder> createState() =>
       _ProductsCategoryListViewBuilderState();
@@ -17,8 +18,6 @@ class ProductsCategoryListViewBuilder extends StatefulWidget {
 
 class _ProductsCategoryListViewBuilderState
     extends State<ProductsCategoryListViewBuilder> {
-  List<bool> favorite = [];
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryProductCubit, CategoryProductState>(
@@ -31,8 +30,12 @@ class _ProductsCategoryListViewBuilderState
         }
 
         if (state is CategoryProductSuccess) {
-          if (favorite.length != state.products.length) {
-            favorite = List.generate(state.products.length, (i) => false);
+          List<AllProductModel> sortedList = [...state.products];
+
+          if (widget.sortType == 0) {
+            sortedList.sort((a, b) => a.price.compareTo(b.price));
+          } else {
+            sortedList.sort((a, b) => b.price.compareTo(a.price));
           }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -42,82 +45,116 @@ class _ProductsCategoryListViewBuilderState
             ),
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: state.products.length,
+            itemCount: sortedList.length,
             padding: const EdgeInsets.symmetric(vertical: 10),
             itemBuilder: (context, i) {
-              return Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            state.products[i].image,
-                            fit: BoxFit.cover,
-                            height: 150,
-                            width: double.infinity,
-                            errorBuilder: (context, error, stackTrace) =>
-                                Icon(Icons.broken_image, size: 50),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const FaIcon(
-                              FontAwesomeIcons.star,
-                              size: 14,
-                              color: Colors.amber,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(state.products[i].rating.toString()),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          state.products[i].category,
-                          style: Style.textStyle11grey,
-                        ),
-                        const SizedBox(height: 1),
-                        Text(
-                          state.products[i].productName,
-                          style: Style.textStyleBold20Black,
-                        ),
-                        const SizedBox(height: 4),
+              final product = sortedList[i];
+              final bool hasDiscount = product.discountPercentage > 0;
+              final discountedPrice =
+                  product.price * (1 - product.discountPercentage / 100);
 
-                        Text(
-                          state.products[i].price.toString(),
-                          style: Style.textStyleBold16Black,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    top: 170,
-                    right: 6,
-                    child: CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Colors.white,
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        iconSize: 15,
-                        onPressed: () {
-                          setState(() {
-                            favorite[i] = !favorite[i];
-                          });
-                        },
-                        icon: Icon(
-                          favorite[i] == true
-                              ? Icons.favorite
-                              : Icons.favorite_outline,
-                          color: favorite[i] == true ? Colors.red : Colors.grey,
-                        ),
+              return GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return ProductInfo(product: product);
+                    },
+                  );
+                },
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              product.image,
+                              fit: BoxFit.cover,
+                              height: 150,
+                              width: double.infinity,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Icon(Icons.broken_image, size: 50),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              const FaIcon(
+                                FontAwesomeIcons.star,
+                                size: 14,
+                                color: Colors.amber,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(state.products[i].rating.toString()),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          Text(product.category, style: Style.textStyle11grey),
+                          const SizedBox(height: 1),
+                          Text(
+                            product.productName,
+                            style: Style.textStyleBold20Black,
+                          ),
+                          const SizedBox(height: 4),
+
+                          hasDiscount
+                              ? Row(
+                                  children: [
+                                    Text(
+                                      product.price.toStringAsFixed(2),
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      '${discountedPrice.toStringAsFixed(2)}\$',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ],
+                                )
+                              : Text(
+                                  '${product.price.toStringAsFixed(2)}\$',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                    BlocBuilder<FavoriteCubit, FavoriteState>(
+                      builder: (context, state) {
+                        final favoriteCubit = context.read<FavoriteCubit>();
+                        final isFav = favoriteCubit.isFavorite(product);
+                        return Positioned(
+                          top: 170,
+                          right: 6,
+                          child: CircleAvatar(
+                            radius: 16,
+                            backgroundColor: Colors.white,
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              iconSize: 15,
+                              onPressed: () {
+                                context.read<FavoriteCubit>().addToFavoriteList(
+                                  product,
+                                );
+                              },
+                              icon: Icon(
+                                isFav ? Icons.favorite : Icons.favorite_outline,
+                                color: isFav ? Colors.red : Colors.grey,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               );
             },
           );

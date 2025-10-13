@@ -16,6 +16,7 @@ class NewProductListViewBuilder extends StatelessWidget {
 
         child: ListView.builder(
           itemCount: products.length,
+
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, i) {
             final product = products[i];
@@ -35,7 +36,10 @@ class NewProductListViewBuilder extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text(product.category, style: Style.textStyleBold16Black),
+                    Text(
+                      product.productName,
+                      style: Style.textStyleBold16Black,
+                    ),
                     Row(
                       children: [
                         Text(

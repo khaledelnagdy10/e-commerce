@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/core/utils/text_style.dart';
+import 'package:store_app2/features/presentation/bag/features/view/bag_view.dart';
+import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
 
 class ProductInfo extends StatefulWidget {
-  const ProductInfo({super.key});
+  const ProductInfo({super.key, required this.product});
+  final AllProductModel product;
 
   @override
   State<ProductInfo> createState() => _ProductInfoState();
@@ -72,7 +76,19 @@ class _ProductInfoState extends State<ProductInfo> {
               height: 48,
               width: MediaQuery.of(context).size.width * 0.9,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return BagInfoBody(
+                          selectedSize: sizes[selectedIndex],
+                          products: [widget.product],
+                        );
+                      },
+                    ),
+                  );
+                },
                 child: Text('ADD TO CART'),
               ),
             ),

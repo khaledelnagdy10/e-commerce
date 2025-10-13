@@ -9,7 +9,6 @@ import 'package:store_app2/features/presentation/home/features/widgets/product_s
 
 class HomeInfoBody extends StatefulWidget {
   const HomeInfoBody({super.key});
-
   @override
   State<HomeInfoBody> createState() => _HomeInfoBodyState();
 }
@@ -18,6 +17,7 @@ class _HomeInfoBodyState extends State<HomeInfoBody> {
   @override
   void initState() {
     context.read<AllProductCubit>().fetchAllProduct();
+
     super.initState();
   }
 

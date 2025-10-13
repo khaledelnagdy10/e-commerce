@@ -7,17 +7,22 @@ class SaleProductListViewBuilder extends StatelessWidget {
   const SaleProductListViewBuilder({super.key, required this.products});
 
   final List<AllProductModel> products;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: 16, top: 22),
       child: SizedBox(
         height: 300,
+
         child: ListView.builder(
           itemCount: products.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, i) {
             final product = products[i];
+            final discountedPrice =
+                product.price * (1 - product.discountPercentage / 100);
+
             return Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: SizedBox(
@@ -34,11 +39,14 @@ class SaleProductListViewBuilder extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text(product.category, style: Style.textStyleBold16Black),
+                    Text(
+                      product.productName,
+                      style: Style.textStyleBold16Black,
+                    ),
                     Row(
                       children: [
                         Text(
-                          '${product.price}\$',
+                          product.price.toStringAsFixed(2),
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 12,
@@ -47,11 +55,8 @@ class SaleProductListViewBuilder extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          '${product.price}\$',
-                          style: TextStyle(
-                            color: Colors.red,
-                            overflow: TextOverflow.clip,
-                          ),
+                          '${discountedPrice.toStringAsFixed(2)}\$',
+                          style: TextStyle(color: Colors.red),
                         ),
                       ],
                     ),

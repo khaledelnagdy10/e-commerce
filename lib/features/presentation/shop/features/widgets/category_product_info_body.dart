@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/core/utils/text_style.dart';
 import 'package:store_app2/features/presentation/shop/features/widgets/product_info.dart';
 import 'package:store_app2/features/presentation/shop/features/widgets/products_category_list_view_builder.dart';
 
-class CategoryInfoBody extends StatefulWidget {
-  const CategoryInfoBody({super.key});
-
+class CategoryProductInfoBody extends StatefulWidget {
+  const CategoryProductInfoBody({super.key, required this.categoryName});
+  final String categoryName;
   @override
-  State<CategoryInfoBody> createState() => _CategoryInfoBodyState();
+  State<CategoryProductInfoBody> createState() =>
+      _CategoryProductInfoBodyState();
 }
 
-class _CategoryInfoBodyState extends State<CategoryInfoBody> {
+class _CategoryProductInfoBodyState extends State<CategoryProductInfoBody> {
+  int filterPriceType = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +54,10 @@ class _CategoryInfoBodyState extends State<CategoryInfoBody> {
                         ],
                       ),
 
-                      Text('Category Name', style: Style.textStyleBold30Black),
+                      Text(
+                        widget.categoryName,
+                        style: Style.textStyleBold24Black,
+                      ),
                       Container(
                         color: Colors.grey.shade50,
                         child: Row(
@@ -110,13 +117,22 @@ class _CategoryInfoBodyState extends State<CategoryInfoBody> {
                             Text('Filters'),
                             SizedBox(width: 80),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  filterPriceType = filterPriceType == 0
+                                      ? 1
+                                      : 0;
+                                });
+                              },
                               icon: FaIcon(
                                 FontAwesomeIcons.arrowsUpDown,
                                 size: 20,
                               ),
                             ),
-                            Text('Price lowest to high'),
+
+                            filterPriceType == 0
+                                ? Text('Price lowest to highest')
+                                : Text('Price highest to lowest'),
                           ],
                         ),
                       ),
@@ -128,17 +144,7 @@ class _CategoryInfoBodyState extends State<CategoryInfoBody> {
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return ProductInfo();
-                    },
-                  );
-                },
-                child: ProductsCategoryListViewBuilder(),
-              ),
+              child: ProductsCategoryListViewBuilder(sortType: filterPriceType),
             ),
           ],
         ),

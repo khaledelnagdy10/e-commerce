@@ -10,7 +10,8 @@ part 'all_product_state.dart';
 class AllProductCubit extends Cubit<AllProductCubitState> {
   final AllProductService allProductService;
 
-  AllProductCubit(this.allProductService) : super(AllProductCubitInitial());
+  AllProductCubit({required this.allProductService})
+    : super(AllProductCubitInitial());
   List<AllProductModel> allProducts = [];
   List<AllProductModel> clothesProducts = [];
   List<AllProductModel> saleProducts = [];
