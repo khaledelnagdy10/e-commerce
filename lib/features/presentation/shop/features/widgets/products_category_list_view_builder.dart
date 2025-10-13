@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:store_app2/core/utils/Favourite%20cubit/favorite_cubit.dart';
+import 'package:store_app2/features/presentation/favorite/features/controller/Favourite%20cubit/favorite_cubit.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/core/utils/text_style.dart';
 import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
@@ -48,17 +48,18 @@ class _ProductsCategoryListViewBuilderState
             itemCount: sortedList.length,
             padding: const EdgeInsets.symmetric(vertical: 10),
             itemBuilder: (context, i) {
-              final product = sortedList[i];
-              final bool hasDiscount = product.discountPercentage > 0;
+              final sortedProduct = sortedList[i];
+              final bool hasDiscount = sortedProduct.discountPercentage > 0;
               final discountedPrice =
-                  product.price * (1 - product.discountPercentage / 100);
+                  sortedProduct.price *
+                  (1 - sortedProduct.discountPercentage / 100);
 
               return GestureDetector(
                 onTap: () {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return ProductInfo(product: product);
+                      return ProductInfo(product: sortedProduct);
                     },
                   );
                 },
@@ -72,7 +73,7 @@ class _ProductsCategoryListViewBuilderState
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
-                              product.image,
+                              sortedProduct.image,
                               fit: BoxFit.cover,
                               height: 150,
                               width: double.infinity,
@@ -89,14 +90,17 @@ class _ProductsCategoryListViewBuilderState
                                 color: Colors.amber,
                               ),
                               const SizedBox(width: 4),
-                              Text(state.products[i].rating.toString()),
+                              Text(sortedProduct.rating.toString()),
                             ],
                           ),
                           const SizedBox(height: 6),
-                          Text(product.category, style: Style.textStyle11grey),
+                          Text(
+                            sortedProduct.category,
+                            style: Style.textStyle11grey,
+                          ),
                           const SizedBox(height: 1),
                           Text(
-                            product.productName,
+                            sortedProduct.productName,
                             style: Style.textStyleBold20Black,
                           ),
                           const SizedBox(height: 4),
@@ -105,7 +109,7 @@ class _ProductsCategoryListViewBuilderState
                               ? Row(
                                   children: [
                                     Text(
-                                      product.price.toStringAsFixed(2),
+                                      sortedProduct.price.toStringAsFixed(2),
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 12,
@@ -120,7 +124,7 @@ class _ProductsCategoryListViewBuilderState
                                   ],
                                 )
                               : Text(
-                                  '${product.price.toStringAsFixed(2)}\$',
+                                  '${sortedProduct.price.toStringAsFixed(2)}\$',
                                   style: TextStyle(color: Colors.red),
                                 ),
                         ],
@@ -129,7 +133,7 @@ class _ProductsCategoryListViewBuilderState
                     BlocBuilder<FavoriteCubit, FavoriteState>(
                       builder: (context, state) {
                         final favoriteCubit = context.read<FavoriteCubit>();
-                        final isFav = favoriteCubit.isFavorite(product);
+                        final isFav = favoriteCubit.isFavorite(sortedProduct);
                         return Positioned(
                           top: 170,
                           right: 6,
@@ -141,7 +145,7 @@ class _ProductsCategoryListViewBuilderState
                               iconSize: 15,
                               onPressed: () {
                                 context.read<FavoriteCubit>().addToFavoriteList(
-                                  product,
+                                  sortedProduct,
                                 );
                               },
                               icon: Icon(
