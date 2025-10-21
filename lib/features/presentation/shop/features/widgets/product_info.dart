@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/core/utils/text_style.dart';
 import 'package:store_app2/features/presentation/bag/features/controller/Favourite%20cubit/bag_cubit.dart';
-import 'package:store_app2/features/presentation/bag/features/view/bag_view.dart';
-import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
 
 class ProductInfo extends StatefulWidget {
   const ProductInfo({super.key, required this.product});
@@ -79,8 +77,52 @@ class _ProductInfoState extends State<ProductInfo> {
               width: MediaQuery.of(context).size.width * 0.9,
               child: ElevatedButton(
                 onPressed: () {
-                  context.read<BagCubit>().addToBagList(widget.product);
-                  Navigator.pop(context);
+                  if (selectedIndex == -1) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 20,
+                        ),
+                        content: Row(
+                          children: [
+                            Icon(
+                              Icons.warning_amber_rounded,
+                              color: Colors.red,
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                'Please choose a size before adding to cart.',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          Center(
+                            child: TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                'OK',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    context.read<BagCubit>().addToBagList(widget.product);
+                    Navigator.pop(context);
+                  }
                 },
                 child: Text('ADD TO CART'),
               ),
