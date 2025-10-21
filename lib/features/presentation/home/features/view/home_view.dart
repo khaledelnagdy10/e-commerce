@@ -18,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
   final List<Widget> screens = [
     HomeInfoBody(),
     AllCategoriesView(),
-    BagView(selectedSize: '', products: []),
+    BagView(),
     FavoriteView(),
   ];
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/core/utils/text_style.dart';
+import 'package:store_app2/features/presentation/bag/features/controller/bag%20cubit/bag_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/view/bag_view.dart';
 import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
 
@@ -77,17 +79,8 @@ class _ProductInfoState extends State<ProductInfo> {
               width: MediaQuery.of(context).size.width * 0.9,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return BagInfoBody(
-                          selectedSize: sizes[selectedIndex],
-                          products: [widget.product],
-                        );
-                      },
-                    ),
-                  );
+                  context.read<BagCubit>().addToBagList(widget.product);
+                  Navigator.pop(context);
                 },
                 child: Text('ADD TO CART'),
               ),
