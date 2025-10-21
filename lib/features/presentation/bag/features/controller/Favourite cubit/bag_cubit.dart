@@ -12,11 +12,11 @@ class BagCubit extends Cubit<BagState> {
   List<AllProductModel> bagProductsList = [];
 
   void addToBagList(AllProductModel product) {
-    // if (bagProductsList.contains(product)) {
-    //   bagProductsList.remove(product);
-    // } else {
-    bagProductsList.add(product);
-    // }
+    if (bagProductsList.contains(product)) {
+      null;
+    } else {
+      bagProductsList.add(product);
+    }
     emit(BagUpdated(bagList: List.from(bagProductsList), selectedSize: ''));
   }
 

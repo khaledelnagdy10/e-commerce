@@ -11,7 +11,7 @@ import 'package:store_app2/core/data/services/local_cache_data.dart';
 import 'package:store_app2/core/utils/text_style.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
 import 'package:store_app2/features/presentation/auth/features/view/auth_view.dart';
-import 'package:store_app2/features/presentation/bag/features/controller/bag%20cubit/bag_cubit.dart';
+import 'package:store_app2/features/presentation/bag/features/controller/Favourite%20cubit/bag_cubit.dart';
 import 'package:store_app2/features/presentation/home/features/controller/cubit/all_product_cubit.dart';
 import 'package:store_app2/features/presentation/home/features/view/home_view.dart';
 import 'package:store_app2/features/presentation/shop/features/controller/categories_cubit/categories_cubit.dart';
