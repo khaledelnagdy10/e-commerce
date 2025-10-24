@@ -4,7 +4,7 @@ import 'package:store_app2/core/utils/text_style.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
 
 class ProfileInfoBody extends StatefulWidget {
-  ProfileInfoBody({super.key});
+  const ProfileInfoBody({super.key});
 
   @override
   State<ProfileInfoBody> createState() => _ProfileInfoBodyState();
@@ -21,6 +21,7 @@ class _ProfileInfoBodyState extends State<ProfileInfoBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
+        final userData = context.read<AuthCubit>().userData;
         if (state is AuthSuccess) {
           final cubit = context.read<AuthCubit>();
           final password = cubit.userData['password'];
@@ -33,18 +34,45 @@ class _ProfileInfoBodyState extends State<ProfileInfoBody> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('My Profile', style: Style.textStyleBold30Black),
+              Text('My Profile', style: Style.textStyleBoldHeadLine),
               SizedBox(height: 20),
 
               ListTile(
                 tileColor: Colors.white,
-                title: Text('Full name', style: Style.textStyle11grey),
-                subtitle: Text(context.read<AuthCubit>().userData['name']),
+                title: Text('email', style: Style.textStyle11grey),
+                subtitle: Text(userData['name']),
               ),
               SizedBox(height: 20),
               ListTile(
                 tileColor: Colors.white,
-                leading: Text(hiddenPassword, style: Style.textStyle14grey),
+                title: Text('Email', style: Style.textStyle11grey),
+                subtitle: Text(userData['email']),
+              ),
+              SizedBox(height: 80),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Password', style: Style.textStyleBold24Black),
+                  GestureDetector(
+                    onTap: () async {
+                      await context
+                          .read<AuthCubit>()
+                          .authService
+                          .sendPasswordResetEmail(email: userData['email']);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Password reset email sent!')),
+                      );
+                    },
+                    child: Text('Change', style: Style.textStyle14grey),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              ListTile(
+                tileColor: Colors.white,
+                title: Text('Password', style: Style.textStyle11grey),
+
+                subtitle: Text(hiddenPassword),
               ),
             ],
           );
