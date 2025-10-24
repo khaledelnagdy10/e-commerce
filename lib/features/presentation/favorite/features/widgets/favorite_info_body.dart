@@ -10,6 +10,9 @@ class FavoriteInfoBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FavoriteCubit, FavoriteState>(
       builder: (context, state) {
+        if (state is FavoriteLoading) {
+          return CircularProgressIndicator();
+        }
         if (state is FavoriteUpdated) {
           return Expanded(
             child: ListView.separated(
@@ -29,7 +32,7 @@ class FavoriteInfoBody extends StatelessWidget {
                         width: 90,
 
                         child: Image.network(
-                          product.image,
+                          product.images,
                           fit: BoxFit.cover,
                           height: double.infinity,
                         ),

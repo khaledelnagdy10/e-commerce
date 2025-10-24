@@ -9,6 +9,8 @@ sealed class FavoriteState extends Equatable {
 
 final class FavoriteInitial extends FavoriteState {}
 
+final class FavoriteLoading extends FavoriteState {}
+
 class FavoriteUpdated extends FavoriteState {
   final List<AllProductModel> favoriteList;
 

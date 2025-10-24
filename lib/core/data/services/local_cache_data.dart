@@ -24,6 +24,10 @@ class CacheData {
       await sharedPreferences?.setDouble(key, value);
       return true;
     }
+    if (value is List<String>) {
+      await sharedPreferences?.setStringList(key, value);
+      return true;
+    }
     if (value is bool) {
       await sharedPreferences?.setBool(key, value);
       return true;
