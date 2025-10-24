@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app2/features/presentation/bag/features/view/bag_view.dart';
 import 'package:store_app2/features/presentation/favorite/features/view/favorite_view.dart';
 import 'package:store_app2/features/presentation/home/features/widgets/home_info_body.dart';
+import 'package:store_app2/features/presentation/profile/view/profile_view.dart';
 import 'package:store_app2/features/presentation/shop/features/views/all_categories_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -20,6 +21,7 @@ class _HomeViewState extends State<HomeView> {
     AllCategoriesView(),
     BagView(),
     FavoriteView(),
+    ProfileView(),
   ];
 
   @override

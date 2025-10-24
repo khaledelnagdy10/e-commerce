@@ -16,7 +16,7 @@ class AuthCubit extends Cubit<AuthState> {
     : super(AuthInitial());
   final AuthService authService;
   final AuthDataBase firebaseFirestore;
-  dynamic value = '';
+  dynamic userData = '';
 
   Future<void> signUp({
     required String email,
@@ -36,7 +36,12 @@ class AuthCubit extends Cubit<AuthState> {
       firebaseFirestore.set(
         collectionPath: 'users',
         doc: userCredential.user!.uid,
-        data: {'name': fullName, 'email': email, 'password': password},
+        data: {
+          'name': fullName,
+          'email': email,
+          'password': password,
+          'googleAccount': false,
+        },
       );
 
       emit(AuthSuccess());
@@ -76,6 +81,7 @@ class AuthCubit extends Cubit<AuthState> {
           'name': userCredential.user!.displayName,
           'email': userCredential.user?.email ?? '',
           'googleAccount': true,
+          'password': '',
         },
       );
       firebaseFirestore.getDoc(
@@ -86,9 +92,26 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthSuccess());
     } on ErrorModel catch (e) {
       emit(AuthFailure(errorModel: e));
-    } catch (e, stacktrace) {
-      log('❗ Unexpected error: $e');
-      log('📌 Stacktrace: $stacktrace');
+    } catch (e) {
+      log('Unexpected error: $e');
+      emit(AuthFailure(errorModel: ErrorModel(errMessage: 'Unexpected: $e')));
+    }
+  }
+
+  Future<void> getUserData() async {
+    emit(AuthLoading());
+    try {
+      final uid = await CacheData.getData(key: 'email');
+      final value = await firebaseFirestore.getDoc(
+        collectionPath: 'users',
+        doc: uid,
+      );
+
+      userData = value;
+      emit(AuthSuccess());
+    } on ErrorModel catch (e) {
+      emit(AuthFailure(errorModel: e));
+    } catch (e) {
       emit(AuthFailure(errorModel: ErrorModel(errMessage: 'Unexpected: $e')));
     }
   }
