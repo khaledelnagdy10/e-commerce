@@ -67,7 +67,7 @@ class _HomeInfoBodyState extends State<HomeInfoBody> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('New', style: Style.textStyleBold30Black),
+                    const Text('New', style: Style.textStyleBoldHeadLine),
                     GestureDetector(
                       onTap: () {},
                       child: const Text('View All'),
@@ -107,7 +107,7 @@ class _HomeInfoBodyState extends State<HomeInfoBody> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Sale', style: Style.textStyleBold30Black),
+                    const Text('Sale', style: Style.textStyleBoldHeadLine),
                     GestureDetector(
                       onTap: () {},
                       child: const Text('View All'),

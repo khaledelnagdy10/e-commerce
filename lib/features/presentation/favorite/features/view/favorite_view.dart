@@ -13,7 +13,7 @@ class FavoriteView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('My Favorites', style: Style.textStyleBold30Black),
+            Text('My Favorites', style: Style.textStyleBoldHeadLine),
             FavoriteInfoBody(),
           ],
         ),

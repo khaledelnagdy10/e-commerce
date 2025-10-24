@@ -73,7 +73,7 @@ class _ProductsCategoryListViewBuilderState
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
-                              sortedProduct.image,
+                              sortedProduct.images,
                               fit: BoxFit.cover,
                               height: 150,
                               width: double.infinity,
@@ -130,10 +130,16 @@ class _ProductsCategoryListViewBuilderState
                         ],
                       ),
                     ),
-                    BlocBuilder<FavoriteCubit, FavoriteState>(
-                      builder: (context, state) {
-                        final favoriteCubit = context.read<FavoriteCubit>();
-                        final isFav = favoriteCubit.isFavorite(sortedProduct);
+                    BlocSelector<FavoriteCubit, FavoriteState, bool>(
+                      selector: (state) {
+                        if (state is FavoriteUpdated) {
+                          return state.favoriteList.any(
+                            (item) => item.id == sortedProduct.id,
+                          );
+                        }
+                        return false;
+                      },
+                      builder: (context, isFav) {
                         return Positioned(
                           top: 170,
                           right: 6,

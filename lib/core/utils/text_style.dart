@@ -48,7 +48,7 @@ abstract class Style {
     fontWeight: FontWeight.bold,
   );
 
-  static const textStyleBold30Black = TextStyle(
+  static const textStyleBoldHeadLine = TextStyle(
     fontSize: 35,
     color: Colors.black,
     fontWeight: FontWeight.bold,

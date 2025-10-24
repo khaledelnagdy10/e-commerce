@@ -37,7 +37,7 @@ class _BagInfoBodyState extends State<BagInfoBody> {
                         width: 90,
 
                         child: Image.network(
-                          product.image,
+                          product.images,
                           fit: BoxFit.cover,
                           height: double.infinity,
                         ),

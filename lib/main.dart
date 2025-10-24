@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' show Firebase;
@@ -23,6 +25,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await CacheData.cacheInitialization();
+  log(CacheData.getData(key: 'favorites'));
 
   runApp(MainApp());
 }
@@ -33,6 +36,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cachedEmail = CacheData.getData(key: 'email');
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -43,6 +47,8 @@ class MainApp extends StatelessWidget {
             ),
           ),
         ),
+        BlocProvider(create: (context) => FavoriteCubit()),
+
         BlocProvider(
           create: (context) =>
               AllProductCubit(allProductService: AllProductService())
@@ -55,11 +61,10 @@ class MainApp extends StatelessWidget {
                 ..fetchCategories(),
         ),
         BlocProvider(create: (context) => BagCubit()),
-        BlocProvider(create: (context) => FavoriteCubit()),
       ],
       child: MaterialApp(
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.grey.shade100,
+          scaffoldBackgroundColor: Colors.grey.shade200,
           bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
           cardTheme: CardThemeData(color: Colors.white),
           appBarTheme: AppBarTheme(
@@ -78,6 +83,7 @@ class MainApp extends StatelessWidget {
           ),
         ),
         home: cachedEmail != null ? HomeView() : AuthView(authType: 0),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

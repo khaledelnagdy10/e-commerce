@@ -90,7 +90,7 @@ class AuthView extends StatelessWidget {
                       children: [
                         Text(
                           authType == 0 ? 'Sign up' : 'Login',
-                          style: Style.textStyleBold30Black,
+                          style: Style.textStyleBoldHeadLine,
                         ),
                       ],
                     ),

@@ -27,7 +27,7 @@ class NewProductListViewBuilder extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ProductCard(url: product.image),
+                    ProductCard(url: product.images),
                     const SizedBox(height: 8),
                     Icon(Icons.star_border_outlined),
                     Text(

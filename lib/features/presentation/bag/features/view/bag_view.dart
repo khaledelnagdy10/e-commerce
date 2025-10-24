@@ -13,7 +13,7 @@ class BagView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('My Bag', style: Style.textStyleBold30Black),
+            Text('My Bag', style: Style.textStyleBoldHeadLine),
             BagInfoBody(),
           ],
         ),
