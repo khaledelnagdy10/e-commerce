@@ -59,7 +59,7 @@ class _SearchCategoryViewState extends State<SearchCategoryView> {
                 }
                 final filteredCategories = state.allCategoriesList
                     .where(
-                      (p) => p.categoriesName.toLowerCase().contains(
+                      (p) => p.name.toLowerCase().contains(
                         searchQuery.toLowerCase(),
                       ),
                     )
@@ -78,15 +78,14 @@ class _SearchCategoryViewState extends State<SearchCategoryView> {
                             MaterialPageRoute(
                               builder: (context) {
                                 return CategoryProductView(
-                                  categoryName:
-                                      filteredCategories[i].categoriesName,
+                                  categoryName: filteredCategories[i].name,
                                 );
                               },
                             ),
                           );
                         },
                         child: ListTile(
-                          title: Text(filteredCategories[i].categoriesName),
+                          title: Text(filteredCategories[i].name),
                         ),
                       );
                     },

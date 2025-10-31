@@ -40,15 +40,14 @@ class AllCategoriesListViewBuilder extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) {
                               return CategoryProductView(
-                                categoryName:
-                                    state.allCategoriesList[i].categoriesName,
+                                categoryName: state.allCategoriesList[i].name,
                               );
                             },
                           ),
                         );
                       },
                       child: Text(
-                        state.allCategoriesList[i].categoriesName.toString(),
+                        state.allCategoriesList[i].name.toString(),
                         style: Style.textStyle16Black,
                       ),
                     ),

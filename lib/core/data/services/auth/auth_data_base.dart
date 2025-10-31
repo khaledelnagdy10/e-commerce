@@ -35,6 +35,14 @@ class AuthDataBase {
         .get();
   }
 
+  Future<void> update({
+    required String collectionPath,
+    required String doc,
+    required Map<String, dynamic> data,
+  }) async {
+    await firestore.collection(collectionPath).doc(doc).update(data);
+  }
+
   Future<dynamic> getCollection({required String collectionPath}) async {
     return await FirebaseFirestore.instance.collection(collectionPath).get();
   }
