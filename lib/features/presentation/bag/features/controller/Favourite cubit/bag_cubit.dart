@@ -12,15 +12,13 @@ class BagCubit extends Cubit<BagState> {
   List<AllProductModel> bagProductsList = [];
 
   void addToBagList(AllProductModel product) {
-    if (bagProductsList.contains(product)) {
-      null;
-    } else {
+    if (!isAddedToCart(product)) {
       bagProductsList.add(product);
     }
-    emit(BagUpdated(bagList: bagProductsList));
+    emit(BagUpdated(bagList: List.from(bagProductsList)));
   }
 
-  bool isFavorite(AllProductModel product) {
-    return bagProductsList.contains(product);
+  bool isAddedToCart(AllProductModel product) {
+    return bagProductsList.any((p) => p.id == product.id);
   }
 }
