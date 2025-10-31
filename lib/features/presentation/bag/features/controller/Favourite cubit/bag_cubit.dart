@@ -17,7 +17,7 @@ class BagCubit extends Cubit<BagState> {
     } else {
       bagProductsList.add(product);
     }
-    emit(BagUpdated(bagList: List.from(bagProductsList), selectedSize: ''));
+    emit(BagUpdated(bagList: bagProductsList));
   }
 
   bool isFavorite(AllProductModel product) {

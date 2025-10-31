@@ -12,9 +12,8 @@ final class BagInitial extends BagState {}
 
 class BagUpdated extends BagState {
   final List<AllProductModel> bagList;
-  final String selectedSize;
 
-  const BagUpdated({required this.bagList, required this.selectedSize});
+  const BagUpdated({required this.bagList});
 
   @override
   List<Object> get props => [bagList];

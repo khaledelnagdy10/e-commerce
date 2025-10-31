@@ -15,7 +15,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     try {
       final allCategories = await getAllCategory.getAllCategory();
 
-      emit(CategoriesSuccess(allCategories: allCategories));
+      emit(CategoriesSuccess(allCategoriesList: allCategories));
     } catch (e) {
       emit(CategoriesFailure(errMessage: ErrorModel(errMessage: e.toString())));
     }

@@ -69,10 +69,7 @@ class _BagInfoBodyState extends State<BagInfoBody> {
                                   Text("Black", style: Style.textStyle14Black),
                                   SizedBox(width: 20),
                                   Text("Size:", style: Style.textStyle14grey),
-                                  Text(
-                                    state.selectedSize,
-                                    style: Style.textStyle14Black,
-                                  ),
+                                  Text('XL', style: Style.textStyle14Black),
                                 ],
                               ),
                               SizedBox(height: 30),

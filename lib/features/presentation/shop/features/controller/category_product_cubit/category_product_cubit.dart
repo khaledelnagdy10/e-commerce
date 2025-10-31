@@ -16,7 +16,7 @@ class CategoryProductCubit extends Cubit<CategoryProductState> {
     try {
       final categoryProducts = await getCategoryProductService
           .categoryProductService(categoryName: categoryName);
-      emit(CategoryProductSuccess(products: categoryProducts));
+      emit(CategoryProductSuccess(productsList: categoryProducts));
     } on Exception catch (e) {
       emit(
         CategoryProductFailure(

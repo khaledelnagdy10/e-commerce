@@ -8,9 +8,9 @@ final class CategoryProductInitial extends CategoryProductState {}
 final class CategoryProductLoading extends CategoryProductState {}
 
 final class CategoryProductSuccess extends CategoryProductState {
-  final List<AllProductModel> products;
+  final List<AllProductModel> productsList;
 
-  CategoryProductSuccess({required this.products});
+  CategoryProductSuccess({required this.productsList});
 }
 
 final class CategoryProductFailure extends CategoryProductState {
