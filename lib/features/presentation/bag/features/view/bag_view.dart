@@ -9,12 +9,32 @@ class BagView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 60),
+        padding: const EdgeInsets.only(
+          left: 15.0,
+          right: 15,
+          top: 55,
+          bottom: 15,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('My Bag', style: Style.textStyleBoldHeadLine),
-            BagInfoBody(),
+            Expanded(child: BagInfoBody()),
+            SizedBox(height: 10),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Total amount:', style: Style.textStyle14grey),
+                Text(r'112$'),
+              ],
+            ),
+            SizedBox(height: 10),
+            SizedBox(
+              height: 50,
+              width: double.infinity,
+              child: ElevatedButton(onPressed: () {}, child: Text('Check Out')),
+            ),
           ],
         ),
       ),
