@@ -16,7 +16,7 @@ class AuthCubit extends Cubit<AuthState> {
     : super(AuthInitial());
   final AuthService authService;
   final AuthDataBase firebaseFirestore;
-  dynamic userData = '';
+  Map<String, dynamic> userData = {};
 
   Future<void> signUp({
     required String email,
@@ -102,12 +102,13 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     try {
       final uid = await CacheData.getData(key: 'email');
-      final value = await firebaseFirestore.getDoc(
+      if (uid == null) return;
+
+      final userDoc = await firebaseFirestore.getDoc(
         collectionPath: 'users',
         doc: uid,
       );
-
-      userData = value;
+      userData = userDoc.data() ?? {};
       emit(AuthSuccess());
     } on ErrorModel catch (e) {
       emit(AuthFailure(errorModel: e));
