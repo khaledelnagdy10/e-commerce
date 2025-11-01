@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:store_app2/core/data/services/local_cache_data.dart';
+import 'package:store_app2/core/data/cache_data/local_cache_data.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
 
 part 'favorite_state.dart';

@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:store_app2/core/data/services/all_product.dart';
+import 'package:store_app2/core/data/services/api_services/all_product.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
 
 part 'all_product_state.dart';

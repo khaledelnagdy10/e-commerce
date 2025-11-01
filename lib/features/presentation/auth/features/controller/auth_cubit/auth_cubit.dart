@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/data/services/auth/auth_data_base.dart';
 
 import 'package:store_app2/core/data/services/auth/auth_service.dart';
-import 'package:store_app2/core/data/services/local_cache_data.dart';
+import 'package:store_app2/core/data/cache_data/local_cache_data.dart';
 import 'package:store_app2/core/utils/widgets/error_model.dart';
 
 part 'auth_state.dart';

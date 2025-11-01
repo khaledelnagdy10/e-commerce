@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:store_app2/core/data/services/get_category_products.dart';
+import 'package:store_app2/core/data/services/api_services/get_category_products.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/core/utils/widgets/error_model.dart';
 

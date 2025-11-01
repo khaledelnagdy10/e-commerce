@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app2/core/data/services/get_all_category.dart';
+import 'package:store_app2/core/data/services/api_services/get_all_category.dart';
 import 'package:store_app2/core/utils/text_style.dart';
 import 'package:store_app2/features/presentation/shop/features/controller/categories_cubit/categories_cubit.dart';
 import 'package:store_app2/features/presentation/shop/features/widgets/all_categories_widgets/all_categories_list_view_builder.dart';
