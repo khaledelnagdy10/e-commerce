@@ -20,7 +20,7 @@ class BagCubit extends Cubit<BagState> {
       bagProductsList.add(product);
     }
     emit(
-      BagUpdated(bagList: List.from(bagProductsList), totalAmount: totalAmount),
+      BagUpdated(bagList: List.from(bagProductsList), totalPrice: totalAmount),
     );
   }
 
@@ -30,7 +30,7 @@ class BagCubit extends Cubit<BagState> {
     }
 
     emit(
-      BagUpdated(bagList: List.from(bagProductsList), totalAmount: totalAmount),
+      BagUpdated(bagList: List.from(bagProductsList), totalPrice: totalAmount),
     );
   }
 
@@ -45,7 +45,7 @@ class BagCubit extends Cubit<BagState> {
       emit(
         BagUpdated(
           bagList: List.from(bagProductsList),
-          totalAmount: totalAmount,
+          totalPrice: totalAmount,
         ),
       );
     }
@@ -58,7 +58,7 @@ class BagCubit extends Cubit<BagState> {
       emit(
         BagUpdated(
           bagList: List.from(bagProductsList),
-          totalAmount: totalAmount,
+          totalPrice: totalAmount,
         ),
       );
     }
