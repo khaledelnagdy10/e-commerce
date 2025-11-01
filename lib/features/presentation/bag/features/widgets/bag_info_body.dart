@@ -22,108 +22,116 @@ class _BagInfoBodyState extends State<BagInfoBody> {
       itemBuilder: (context, i) {
         final product = bagList[i];
 
-        return Container(
-          padding: EdgeInsets.all(4),
-          decoration: BoxDecoration(color: Colors.white),
+        return Stack(
+          alignment: AlignmentGeometry.topRight,
+          children: [
+            Container(
+              padding: EdgeInsets.all(4),
+              decoration: BoxDecoration(color: Colors.white),
 
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              SizedBox(
-                width: 90,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 90,
 
-                child: Image.network(product.images, fit: BoxFit.cover),
-              ),
-
-              const SizedBox(width: 10),
-
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4.0,
-                    vertical: 3,
+                    child: Image.network(product.images, fit: BoxFit.cover),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.productName,
-                        style: TextStyle(color: Colors.black, fontSize: 16),
-                      ),
 
-                      Row(
-                        children: [
-                          Text("color:", style: Style.textStyle14grey),
-                          Text("Black", style: Style.textStyle14Black),
-                          SizedBox(width: 20),
-                          Text("Size:", style: Style.textStyle14grey),
-                          Text('XL', style: Style.textStyle14Black),
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                context.read<BagCubit>().removeFromBagList(
-                                  product,
-                                );
-                              });
-                            },
-                            icon: Icon(Icons.delete),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        children: [
-                          FloatingActionButton(
-                            mini: true,
-                            heroTag: 'decrement_${product.id}',
+                  const SizedBox(width: 10),
 
-                            shape: CircleBorder(),
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.grey,
-                            onPressed: () {
-                              setState(() {
-                                bagCubit.decrementNumberProduct(product);
-                              });
-                            },
-                            child: Icon(Icons.remove),
-                          ),
-                          SizedBox(width: 10),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4.0,
+                        vertical: 3,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
                           Text(
-                            "${product.quantity}",
-                            style: Style.textStyle16Black,
+                            product.productName,
+                            style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
-                          SizedBox(width: 10),
-                          FloatingActionButton(
-                            mini: true,
-                            heroTag: 'increment_${product.id}',
-                            shape: CircleBorder(),
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.grey,
-                            onPressed: () {
-                              setState(() {
-                                bagCubit.incrementNumberProduct(product);
-                              });
-                            },
-                            child: Icon(Icons.add),
+
+                          Row(
+                            children: [
+                              Text("color:", style: Style.textStyle14grey),
+                              Text("Black", style: Style.textStyle14Black),
+                              SizedBox(width: 20),
+                              Text("Size:", style: Style.textStyle14grey),
+                              Text('XL', style: Style.textStyle14Black),
+                            ],
+                          ),
+                          SizedBox(height: 30),
+                          Row(
+                            children: [
+                              FloatingActionButton(
+                                mini: true,
+                                heroTag: 'decrement_${product.id}',
+
+                                shape: CircleBorder(),
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.grey,
+                                onPressed: () {
+                                  setState(() {
+                                    bagCubit.decrementNumberProduct(product);
+                                    bagCubit.totalAmount;
+                                  });
+                                },
+                                child: Icon(Icons.remove),
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "${product.quantity}",
+                                style: Style.textStyle16Black,
+                              ),
+                              SizedBox(width: 10),
+                              FloatingActionButton(
+                                mini: true,
+                                heroTag: 'increment_${product.id}',
+                                shape: CircleBorder(),
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.grey,
+                                onPressed: () {
+                                  setState(() {
+                                    bagCubit.incrementNumberProduct(product);
+                                    bagCubit.totalAmount;
+                                  });
+                                },
+                                child: Icon(Icons.add),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
 
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10, right: 15),
-                child: Text(
-                  "${(product.price * product.quantity).toStringAsFixed(2)}\$",
-                  textAlign: TextAlign.end,
-                  style: Style.textStyle14Black,
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10, right: 15),
+                    child: Text(
+                      "${(product.price * product.quantity).toStringAsFixed(2)}\$",
+                      textAlign: TextAlign.end,
+                      style: Style.textStyle14Black,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              top: 15,
+              child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    context.read<BagCubit>().removeFromBag(product);
+                  });
+                },
+                icon: Icon(Icons.delete, size: 25),
+              ),
+            ),
+          ],
         );
       },
     );
