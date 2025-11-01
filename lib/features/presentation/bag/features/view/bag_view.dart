@@ -4,9 +4,14 @@ import 'package:store_app2/core/utils/text_style.dart';
 import 'package:store_app2/features/presentation/bag/features/controller/Bag%20cubit/bag_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
 
-class BagView extends StatelessWidget {
+class BagView extends StatefulWidget {
   const BagView({super.key});
 
+  @override
+  State<BagView> createState() => _BagViewState();
+}
+
+class _BagViewState extends State<BagView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +24,23 @@ class BagView extends StatelessWidget {
         ),
         child: BlocBuilder<BagCubit, BagState>(
           builder: (context, state) {
+            if (state is BagInitial) {
+              return Center(
+                child: const Text(
+                  'No product Added To Cart',
+                  style: Style.textStyleBold24Black,
+                ),
+              );
+            }
             if (state is BagUpdated) {
+              if (state.totalPrice == 0) {
+                return Center(
+                  child: const Text(
+                    'No product Added To Cart',
+                    style: Style.textStyleBold24Black,
+                  ),
+                );
+              }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -31,7 +52,7 @@ class BagView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Total amount:', style: Style.textStyle14grey),
-                      Text(r'112$'),
+                      Text(state.totalPrice.toStringAsFixed(2)),
                     ],
                   ),
                   SizedBox(height: 10),
@@ -45,14 +66,8 @@ class BagView extends StatelessWidget {
                   ),
                 ],
               );
-            } else {
-              return Center(
-                child: const Text(
-                  'No product Added To Cart',
-                  style: Style.textStyleBold24Black,
-                ),
-              );
             }
+            return SizedBox.shrink();
           },
         ),
       ),
