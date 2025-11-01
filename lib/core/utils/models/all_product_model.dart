@@ -9,6 +9,7 @@ class AllProductModel {
   final String productName;
   final num discountPercentage;
   final String categoryName;
+  int quantity;
 
   AllProductModel({
     required this.id,
@@ -22,6 +23,7 @@ class AllProductModel {
     required this.categoryName,
 
     required this.discountPercentage,
+    this.quantity = 1,
   });
 
   factory AllProductModel.fromJson(Map<String, dynamic> json) {
