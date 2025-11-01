@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
@@ -9,21 +8,33 @@ class BagCubit extends Cubit<BagState> {
 
   List<AllProductModel> bagProductsList = [];
 
-  void addToBagList(AllProductModel product) {
-    if (!isAddedToCart(product)) {
+  double get totalAmount {
+    return bagProductsList.fold(
+      0,
+      (sum, item) => sum + (item.price * item.quantity),
+    );
+  }
+
+  void addToBag(AllProductModel product) {
+    if (!isAddedToBag(product)) {
       bagProductsList.add(product);
     }
-    emit(BagUpdated(bagList: List.from(bagProductsList)));
+    emit(
+      BagUpdated(bagList: List.from(bagProductsList), totalAmount: totalAmount),
+    );
   }
 
-  void removeFromBagList(AllProductModel product) {
-    if (isAddedToCart(product)) {
+  void removeFromBag(AllProductModel product) {
+    if (isAddedToBag(product)) {
       bagProductsList.remove(product);
     }
-    emit(BagUpdated(bagList: List.from(bagProductsList)));
+
+    emit(
+      BagUpdated(bagList: List.from(bagProductsList), totalAmount: totalAmount),
+    );
   }
 
-  bool isAddedToCart(AllProductModel product) {
+  bool isAddedToBag(AllProductModel product) {
     return bagProductsList.any((p) => p.id == product.id);
   }
 
@@ -31,7 +42,12 @@ class BagCubit extends Cubit<BagState> {
     final index = bagProductsList.indexWhere((p) => p.id == product.id);
     if (index != -1) {
       bagProductsList[index].quantity++;
-      emit(BagUpdated(bagList: List.from(bagProductsList)));
+      emit(
+        BagUpdated(
+          bagList: List.from(bagProductsList),
+          totalAmount: totalAmount,
+        ),
+      );
     }
   }
 
@@ -39,7 +55,12 @@ class BagCubit extends Cubit<BagState> {
     final index = bagProductsList.indexWhere((p) => p.id == product.id);
     if (index != -1 && bagProductsList[index].quantity > 1) {
       bagProductsList[index].quantity--;
-      emit(BagUpdated(bagList: List.from(bagProductsList)));
+      emit(
+        BagUpdated(
+          bagList: List.from(bagProductsList),
+          totalAmount: totalAmount,
+        ),
+      );
     }
   }
 }
