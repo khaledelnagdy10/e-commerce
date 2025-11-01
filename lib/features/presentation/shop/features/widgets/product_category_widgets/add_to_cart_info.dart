@@ -120,7 +120,7 @@ class _AddToCartInfoBodyState extends State<AddToCartInfoBody> {
                       ),
                     );
                   } else {
-                    context.read<BagCubit>().addToBagList(widget.product);
+                    context.read<BagCubit>().addToBag(widget.product);
                     Navigator.pop(context);
                   }
                 },
