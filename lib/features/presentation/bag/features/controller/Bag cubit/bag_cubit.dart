@@ -8,6 +8,7 @@ class BagCubit extends Cubit<BagState> {
 
   List<AllProductModel> bagProductsList = [];
 
+  List<AllProductModel> submittedOrdersList = [];
   double get totalAmount {
     return bagProductsList.fold(
       0,
@@ -20,7 +21,11 @@ class BagCubit extends Cubit<BagState> {
       bagProductsList.add(product);
     }
     emit(
-      BagUpdated(bagList: List.from(bagProductsList), totalPrice: totalAmount),
+      BagUpdated(
+        bagList: List.from(bagProductsList),
+        totalPrice: totalAmount,
+        submittedOrdersList: List.from(submittedOrdersList),
+      ),
     );
   }
 
@@ -30,7 +35,11 @@ class BagCubit extends Cubit<BagState> {
     }
 
     emit(
-      BagUpdated(bagList: List.from(bagProductsList), totalPrice: totalAmount),
+      BagUpdated(
+        bagList: List.from(bagProductsList),
+        totalPrice: totalAmount,
+        submittedOrdersList: List.from(submittedOrdersList),
+      ),
     );
   }
 
@@ -46,6 +55,7 @@ class BagCubit extends Cubit<BagState> {
         BagUpdated(
           bagList: List.from(bagProductsList),
           totalPrice: totalAmount,
+          submittedOrdersList: List.from(submittedOrdersList),
         ),
       );
     }
@@ -59,8 +69,21 @@ class BagCubit extends Cubit<BagState> {
         BagUpdated(
           bagList: List.from(bagProductsList),
           totalPrice: totalAmount,
+          submittedOrdersList: List.from(submittedOrdersList),
         ),
       );
     }
+  }
+
+  void submittedOrders() {
+    submittedOrdersList.addAll(bagProductsList);
+    bagProductsList.clear();
+    emit(
+      BagUpdated(
+        bagList: List.from(bagProductsList),
+        totalPrice: totalAmount,
+        submittedOrdersList: List.from(submittedOrdersList),
+      ),
+    );
   }
 }

@@ -12,9 +12,14 @@ final class BagInitial extends BagState {}
 
 class BagUpdated extends BagState {
   final List<AllProductModel> bagList;
+  final List<AllProductModel> submittedOrdersList;
   final double totalPrice;
 
-  const BagUpdated({required this.bagList, required this.totalPrice});
+  const BagUpdated({
+    required this.bagList,
+    required this.submittedOrdersList,
+    required this.totalPrice,
+  });
 
   @override
   List<Object> get props => [bagList, totalPrice];
