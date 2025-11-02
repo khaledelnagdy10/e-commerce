@@ -67,12 +67,11 @@ class MainApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.grey.shade200,
+          scaffoldBackgroundColor: kPrimaryColor,
           bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
           cardTheme: CardThemeData(color: Colors.white),
           appBarTheme: AppBarTheme(
-            backgroundColor: Colors.white,
-            elevation: 2,
+            backgroundColor: kPrimaryColor,
             centerTitle: true,
             foregroundColor: Colors.black,
             titleTextStyle: Style.textStyleAppBarBlack,

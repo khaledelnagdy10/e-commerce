@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+final kPrimaryColor = Colors.grey.shade200;
+
 abstract class Style {
-  static const textStyle11grey = TextStyle(fontSize: 11, color: Colors.grey);
+  static const textStyle12grey = TextStyle(fontSize: 12, color: Colors.grey);
 
   static const textStyle14grey = TextStyle(fontSize: 14, color: Colors.grey);
   static const textStyle14Black = TextStyle(fontSize: 14, color: Colors.black);
