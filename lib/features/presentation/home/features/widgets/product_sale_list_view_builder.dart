@@ -35,7 +35,7 @@ class SaleProductListViewBuilder extends StatelessWidget {
                     Icon(Icons.star_border_outlined),
                     Text(
                       product.description,
-                      style: Style.textStyle11grey,
+                      style: Style.textStyle12grey,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

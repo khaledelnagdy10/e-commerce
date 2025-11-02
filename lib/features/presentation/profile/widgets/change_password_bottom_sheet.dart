@@ -21,7 +21,7 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final authCubit = context.read<AuthCubit>();
-    final userData = authCubit.userData!;
+    final userData = authCubit.userData;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: Column(

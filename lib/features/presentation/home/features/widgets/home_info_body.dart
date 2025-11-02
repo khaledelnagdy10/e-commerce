@@ -80,7 +80,7 @@ class _HomeInfoBodyState extends State<HomeInfoBody> {
                   Padding(padding: EdgeInsets.only(left: 10)),
                   Text(
                     'You have never seen it before',
-                    style: Style.textStyle11grey,
+                    style: Style.textStyle12grey,
                   ),
                 ],
               ),
@@ -118,7 +118,7 @@ class _HomeInfoBodyState extends State<HomeInfoBody> {
               const Row(
                 children: [
                   Padding(padding: EdgeInsets.only(left: 10)),
-                  Text('Super summer sale', style: Style.textStyle11grey),
+                  Text('Super summer sale', style: Style.textStyle12grey),
                 ],
               ),
               BlocBuilder<AllProductCubit, AllProductCubitState>(

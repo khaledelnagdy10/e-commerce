@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store_app2/core/utils/text_style.dart';
-import 'package:store_app2/features/presentation/shop/features/widgets/product_category_widgets/search_category_view.dart';
+import 'package:store_app2/features/presentation/shop/features/widgets/all_categories_widgets/search_category_view.dart';
 import 'package:store_app2/features/presentation/shop/features/widgets/shop_info_body.dart';
 
 class AllCategoriesView extends StatelessWidget {

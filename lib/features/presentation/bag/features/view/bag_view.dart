@@ -17,10 +17,10 @@ class _BagViewState extends State<BagView> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
-          left: 15.0,
-          right: 15,
+          left: 10,
+          right: 10,
           top: 55,
-          bottom: 15,
+          bottom: 10,
         ),
         child: BlocBuilder<BagCubit, BagState>(
           builder: (context, state) {
@@ -60,7 +60,9 @@ class _BagViewState extends State<BagView> {
                     height: 50,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<BagCubit>().submittedOrders();
+                      },
                       child: Text('Check Out'),
                     ),
                   ),

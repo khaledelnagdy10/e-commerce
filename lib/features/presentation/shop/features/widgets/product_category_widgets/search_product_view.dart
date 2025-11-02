@@ -88,7 +88,7 @@ class _SearchProductViewState extends State<SearchProductView> {
                                 ),
                               );
                             },
-                            child: productCardWide(
+                            child: ProductCardWide(
                               product: filteredProducts[i],
                             ),
                           ),

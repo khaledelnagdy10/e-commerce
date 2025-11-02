@@ -62,13 +62,13 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
 
                   ListTile(
                     tileColor: Colors.white,
-                    title: Text('email', style: Style.textStyle11grey),
+                    title: Text('email', style: Style.textStyle12grey),
                     subtitle: Text(userData['name']),
                   ),
                   SizedBox(height: 20),
                   ListTile(
                     tileColor: Colors.white,
-                    title: Text('Email', style: Style.textStyle11grey),
+                    title: Text('Email', style: Style.textStyle12grey),
                     subtitle: Text(userData['email']),
                   ),
                   SizedBox(height: 80),
@@ -95,7 +95,7 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
                   SizedBox(height: 10),
                   ListTile(
                     tileColor: Colors.white,
-                    title: Text('Password', style: Style.textStyle11grey),
+                    title: Text('Password', style: Style.textStyle12grey),
 
                     subtitle: Text(hiddenPassword),
                   ),

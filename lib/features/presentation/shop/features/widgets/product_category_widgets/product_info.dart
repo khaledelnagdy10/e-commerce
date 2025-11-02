@@ -49,7 +49,7 @@ class ProductInfo extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 6),
-              Text(sortedProduct.category, style: Style.textStyle11grey),
+              Text(sortedProduct.category, style: Style.textStyle12grey),
               const SizedBox(height: 1),
               Text(
                 sortedProduct.productName,

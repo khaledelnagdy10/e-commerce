@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/core/utils/text_style.dart';
 import 'package:store_app2/features/presentation/shop/features/widgets/product_category_widgets/products_category_list_view_builder.dart';
-import 'package:store_app2/features/presentation/shop/features/widgets/product_category_widgets/search_category_view.dart';
+import 'package:store_app2/features/presentation/shop/features/widgets/all_categories_widgets/search_category_view.dart';
 import 'package:store_app2/features/presentation/shop/features/widgets/product_category_widgets/search_product_view.dart';
 
 class CategoryProductInfoBody extends StatefulWidget {

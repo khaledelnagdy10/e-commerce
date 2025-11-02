@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:store_app2/core/utils/text_style.dart';
 import 'package:store_app2/features/presentation/bag/features/view/bag_view.dart';
 import 'package:store_app2/features/presentation/favorite/features/view/favorite_view.dart';
 import 'package:store_app2/features/presentation/home/features/widgets/home_info_body.dart';
@@ -30,6 +31,8 @@ class _HomeViewState extends State<HomeView> {
       body: IndexedStack(index: currentIndex, children: screens),
 
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        // backgroundColor: Colors.white10,
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.grey,
         currentIndex: currentIndex,
