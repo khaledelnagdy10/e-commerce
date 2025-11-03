@@ -42,17 +42,42 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
           SizedBox(height: 200),
           ElevatedButton(
             onPressed: () async {
-              if (FirebaseAuth
-                      .instance
-                      .currentUser
-                      ?.providerData
-                      .first
-                      .providerId ==
-                  'google.com') {
-                customScaffoldMessenger(
-                  context,
-                  message: "Google account can't change password",
-                  color: Colors.red,
+              if (userData['google.com'] == true) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 20,
+                    ),
+                    content: Row(
+                      children: [
+                        Icon(Icons.warning_amber_rounded, color: Colors.red),
+                        SizedBox(width: 10),
+                        Text(
+                          'google account cannot change password',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      Center(
+                        child: TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            'OK',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 );
                 return;
               }
@@ -95,7 +120,7 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
               }
               final uid = await CacheData.getData(key: 'email');
               try {
-                authCubit.firebaseFirestore.update(
+                await authCubit.firebaseFirestore.update(
                   collectionPath: 'users',
                   doc: uid,
                   data: {'password': newPassword},
