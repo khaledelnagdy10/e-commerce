@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app2/core/utils/text_style.dart';
+import 'package:store_app2/core/utils/constants.dart';
 import 'package:store_app2/core/utils/widgets/image_assets.dart';
 import 'package:store_app2/features/presentation/home/features/controller/cubit/all_product_cubit.dart';
 import 'package:store_app2/features/presentation/home/features/widgets/custom_categories_grid.dart';

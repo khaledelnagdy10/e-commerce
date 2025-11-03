@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:store_app2/core/utils/text_style.dart';
+import 'package:store_app2/core/utils/constants.dart';
 import 'package:store_app2/features/presentation/favorite/features/widgets/favorite_info_body.dart';
 
 class FavoriteView extends StatelessWidget {

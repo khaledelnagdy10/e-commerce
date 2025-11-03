@@ -9,7 +9,7 @@ import 'package:store_app2/core/data/services/auth/auth_service.dart';
 import 'package:store_app2/core/data/services/api_services/get_all_category.dart';
 import 'package:store_app2/core/data/services/api_services/get_category_products.dart';
 import 'package:store_app2/core/data/cache_data/local_cache_data.dart';
-import 'package:store_app2/core/utils/text_style.dart';
+import 'package:store_app2/core/utils/constants.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
 import 'package:store_app2/features/presentation/auth/features/view/auth_view.dart';
 import 'package:store_app2/features/presentation/bag/features/controller/Bag%20cubit/bag_cubit.dart';

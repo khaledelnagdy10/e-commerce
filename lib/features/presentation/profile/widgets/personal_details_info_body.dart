@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app2/core/utils/text_style.dart';
+import 'package:store_app2/core/utils/constants.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
 
 class PersonalDetailsInfoBody extends StatefulWidget {
@@ -35,7 +35,7 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
           if (userData.isEmpty) {
             return Center(child: Text('Loading profile...'));
           }
-          if (state is AuthSuccess) {
+          if (state is AuthSuccess && userData.isNotEmpty) {
             if (userData.isEmpty) {
               return Center(child: Text('Loading profile...'));
             }

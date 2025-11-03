@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
-import 'package:store_app2/core/utils/text_style.dart' show Style;
+import 'package:store_app2/core/utils/constants.dart' show Style;
 import 'package:store_app2/features/presentation/favorite/features/controller/Favourite%20cubit/favorite_cubit.dart';
 
 class ProductInfo extends StatelessWidget {

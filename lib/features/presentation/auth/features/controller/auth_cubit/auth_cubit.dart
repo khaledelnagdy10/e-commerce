@@ -102,12 +102,14 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     try {
       final uid = await CacheData.getData(key: 'email');
+      print('UID from cache: $uid');
       if (uid == null) return;
 
       final userDoc = await firebaseFirestore.getDoc(
         collectionPath: 'users',
         doc: uid,
       );
+      print('User doc data: ${userDoc.data()}'); // ✅
       userData = userDoc.data() ?? {};
       emit(AuthSuccess());
     } on ErrorModel catch (e) {

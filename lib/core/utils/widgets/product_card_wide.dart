@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
-import 'package:store_app2/core/utils/text_style.dart';
+import 'package:store_app2/core/utils/constants.dart';
 
 class ProductCardWide extends StatelessWidget {
   const ProductCardWide({super.key, required this.product});
