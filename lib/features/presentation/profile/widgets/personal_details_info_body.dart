@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/constants.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
+import 'package:store_app2/features/presentation/profile/widgets/change_password_bottom_sheet.dart';
 
 class PersonalDetailsInfoBody extends StatefulWidget {
   const PersonalDetailsInfoBody({super.key});
@@ -36,9 +37,6 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
             return Center(child: Text('Loading profile...'));
           }
           if (state is AuthSuccess && userData.isNotEmpty) {
-            if (userData.isEmpty) {
-              return Center(child: Text('Loading profile...'));
-            }
             final cubit = context.read<AuthCubit>();
             final password = cubit.userData['password'];
             String hiddenPassword = '*';
@@ -62,7 +60,7 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
 
                   ListTile(
                     tileColor: Colors.white,
-                    title: Text('email', style: Style.textStyle12grey),
+                    title: Text('Full name', style: Style.textStyle12grey),
                     subtitle: Text(userData['name']),
                   ),
                   SizedBox(height: 20),
@@ -77,15 +75,12 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
                     children: [
                       Text('Password', style: Style.textStyleBold24Black),
                       GestureDetector(
-                        onTap: () async {
-                          await context
-                              .read<AuthCubit>()
-                              .authService
-                              .sendPasswordResetEmail(email: userData['email']);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Password reset email sent!'),
-                            ),
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return ChangePasswordBottomSheet();
+                            },
                           );
                         },
                         child: Text('Change', style: Style.textStyle14grey),
