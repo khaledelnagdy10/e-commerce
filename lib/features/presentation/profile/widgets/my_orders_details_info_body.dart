@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/constants.dart';
 import 'package:store_app2/core/utils/widgets/product_card_wide.dart';
+import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/controller/Bag%20cubit/bag_cubit.dart';
 
 class MyOrdersDetailsInfoBody extends StatelessWidget {
@@ -25,6 +26,7 @@ class MyOrdersDetailsInfoBody extends StatelessWidget {
 
               BlocBuilder<BagCubit, BagState>(
                 builder: (context, state) {
+                  final userData = context.read<AuthCubit>().userData;
                   if (state is BagUpdated) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -37,7 +39,7 @@ class MyOrdersDetailsInfoBody extends StatelessWidget {
                             physics: BouncingScrollPhysics(),
                             itemCount: state.submittedOrdersList.length,
                             itemBuilder: (context, i) {
-                              final order = state.submittedOrdersList[i];
+                              final order = userData['orders'];
                               return ProductCardWide(product: order);
                             },
                             separatorBuilder: (_, _) => Divider(),

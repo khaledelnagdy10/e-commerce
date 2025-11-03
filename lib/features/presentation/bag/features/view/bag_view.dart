@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/constants.dart';
+import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/controller/Bag%20cubit/bag_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
 
@@ -62,6 +63,9 @@ class _BagViewState extends State<BagView> {
                     child: ElevatedButton(
                       onPressed: () {
                         context.read<BagCubit>().submittedOrders();
+                        context.read<AuthCubit>().addOrder(
+                          state.submittedOrdersList,
+                        );
                       },
                       child: Text('Check Out'),
                     ),
