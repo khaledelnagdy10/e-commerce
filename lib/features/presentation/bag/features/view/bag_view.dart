@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/constants.dart';
+import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/controller/Bag%20cubit/bag_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
@@ -18,10 +19,10 @@ class _BagViewState extends State<BagView> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
-          left: 10,
-          right: 10,
-          top: 55,
-          bottom: 10,
+          left: 15.0,
+          right: 15,
+          top: 40,
+          bottom: 5,
         ),
         child: BlocBuilder<BagCubit, BagState>(
           builder: (context, state) {
@@ -61,11 +62,14 @@ class _BagViewState extends State<BagView> {
                     height: 50,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         context.read<BagCubit>().submittedOrders();
                         context.read<AuthCubit>().addOrder(
-                          state.submittedOrdersList,
+                          state.submittedOrdersList
+                              .map((product) => product.toJson())
+                              .toList(),
                         );
+                        context.read<AuthCubit>().getUserData();
                       },
                       child: Text('Check Out'),
                     ),

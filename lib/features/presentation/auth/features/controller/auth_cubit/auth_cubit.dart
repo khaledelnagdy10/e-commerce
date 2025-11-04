@@ -58,11 +58,11 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       UserCredential userCredential = await authService
           .signInWithEmailAndPassword(email: email, password: password);
-      firebaseFirestore.getDoc(
+      await firebaseFirestore.getDoc(
         collectionPath: 'users',
         doc: userCredential.user!.uid,
       );
-      CacheData.setData(key: 'email', value: userCredential.user!.uid);
+      await CacheData.setData(key: 'email', value: userCredential.user!.uid);
 
       emit(AuthSuccess());
     } on ErrorModel catch (e) {
@@ -87,11 +87,11 @@ class AuthCubit extends Cubit<AuthState> {
           'orders': [],
         },
       );
-      firebaseFirestore.getDoc(
+      await firebaseFirestore.getDoc(
         collectionPath: 'users',
         doc: userCredential.user!.uid,
       );
-      CacheData.setData(key: 'email', value: userCredential.user!.uid);
+      await CacheData.setData(key: 'email', value: userCredential.user!.uid);
       emit(AuthSuccess());
     } on ErrorModel catch (e) {
       emit(AuthFailure(errorModel: e));
@@ -112,7 +112,7 @@ class AuthCubit extends Cubit<AuthState> {
         collectionPath: 'users',
         doc: uid,
       );
-      log('User doc data: ${userDoc.data()}'); // ✅
+      log('User doc data: ${userDoc.data()}');
       userData = userDoc.data() ?? {};
       emit(AuthSuccess());
     } on ErrorModel catch (e) {
@@ -123,7 +123,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> addOrder(List<dynamic> newOrder) async {
-    final uid = await CacheData.getData(key: 'uid');
+    final uid = await CacheData.getData(key: 'email');
     if (uid == null) return;
 
     try {
@@ -141,7 +141,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<List<Map<String, dynamic>>> getOrders() async {
-    final uid = await CacheData.getData(key: 'uid');
+    final uid = await CacheData.getData(key: 'email');
     if (uid == null) return [];
 
     try {

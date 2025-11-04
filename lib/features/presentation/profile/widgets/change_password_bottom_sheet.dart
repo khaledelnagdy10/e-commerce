@@ -42,7 +42,7 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
           SizedBox(height: 200),
           ElevatedButton(
             onPressed: () async {
-              if (userData['google.com'] == true) {
+              if (userData['googleAccount'] == true) {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
@@ -58,7 +58,7 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
                         Icon(Icons.warning_amber_rounded, color: Colors.red),
                         SizedBox(width: 10),
                         Text(
-                          'google account cannot change password',
+                          'google account cannot \n change password',
                           style: TextStyle(fontSize: 16),
                         ),
                       ],

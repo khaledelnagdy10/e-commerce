@@ -33,6 +33,14 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     return favoriteProductsList.any((p) => p.id == product.id);
   }
 
+  void removeFromFavorites(AllProductModel product) {
+    if (isFavorite(product)) {
+      favoriteProductsList.removeWhere((p) => p.id == product.id);
+      saveFavoriteToCache();
+    }
+    emit(FavoriteUpdated(favoriteList: List.from(favoriteProductsList)));
+  }
+
   Future<void> saveFavoriteToCache() async {
     final favoriteData = jsonEncode(
       favoriteProductsList.map((product) => product.toJson()).toList(),
@@ -41,7 +49,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   Future<void> loadFavoritesFromCache() async {
-    final jsonString = CacheData.getData(key: 'favorites');
+    final jsonString = await CacheData.getData(key: 'favorites');
     if (jsonString != null && jsonString.isNotEmpty) {
       try {
         final List jsonList = jsonDecode(jsonString);

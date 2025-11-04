@@ -37,13 +37,17 @@ class AllProductModel {
           ? json['images'][0]
           : (json['images'] is String ? json['images'] : ''),
       rating: json['rating'],
-      productName: json['tags'] != null && (json['tags']).length > 1
-          ? json['tags'][1]
-          : '',
+      productName:
+          json['productName'] ??
+          (json['tags'] != null && (json['tags']).length > 1
+              ? json['tags'][1]
+              : json['title'] ?? ''),
       discountPercentage: json['discountPercentage'] ?? 0,
-      categoryName: json['tags'] != null && (json['tags']).isNotEmpty
-          ? json['tags'][0].toString()
-          : 'unknown',
+      categoryName:
+          json['categoryName'] ??
+          (json['tags'] != null && (json['tags']).isNotEmpty
+              ? json['tags'][0].toString()
+              : 'unknown'),
     );
   }
 }
@@ -61,6 +65,7 @@ extension ProductMap on AllProductModel {
       'productName': productName,
       'discountPercentage': discountPercentage,
       'categoryName': categoryName,
+      'quantity': quantity,
     };
   }
 }
