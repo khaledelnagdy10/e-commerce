@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String password,
     required String fullName,
+    required String address,
   }) async {
     emit(AuthLoading());
 
@@ -41,8 +41,8 @@ class AuthCubit extends Cubit<AuthState> {
           'name': fullName,
           'email': email,
           'password': password,
+          'address': address,
           'googleAccount': false,
-          'orders': [],
         },
       );
 
@@ -81,10 +81,11 @@ class AuthCubit extends Cubit<AuthState> {
         doc: userCredential.user!.uid,
         data: {
           'name': userCredential.user!.displayName,
-          'email': userCredential.user?.email ?? '',
+          'email': userCredential.user!.email,
           'googleAccount': true,
+          'address':
+              'No Address added from google account ,\t please add your address',
           'password': '',
-          'orders': [],
         },
       );
       await firebaseFirestore.getDoc(
@@ -122,44 +123,69 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> addOrder(List<dynamic> newOrder) async {
-    final uid = await CacheData.getData(key: 'email');
-    if (uid == null) return;
+  // Future<void> addOrder(List<Map<String, dynamic>> newOrder) async {
+  //   final uid = await CacheData.getData(key: 'email');
+  //   if (uid == null) return;
+  //   try {
+  //     final orderData = {"products": newOrder};
 
-    try {
-      await firebaseFirestore.update(
-        collectionPath: 'users',
-        doc: uid,
-        data: {
-          'orders': FieldValue.arrayUnion([newOrder]),
-        },
-      );
-      print('✅ Order added successfully!');
-    } catch (e) {
-      print('❌ Error adding order: $e');
-    }
-  }
+  //     final userDoc = await firebaseFirestore.getDoc(
+  //       collectionPath: 'users',
+  //       doc: uid,
+  //     );
 
-  Future<List<Map<String, dynamic>>> getOrders() async {
-    final uid = await CacheData.getData(key: 'email');
-    if (uid == null) return [];
+  //     if (userDoc.exists) {
+  //       await firebaseFirestore.update(
+  //         collectionPath: 'users',
+  //         doc: uid,
+  //         data: {
+  //           'orders': FieldValue.arrayUnion([orderData]),
+  //         },
+  //       );
+  //     } else {
+  //       await firebaseFirestore.set(
+  //         collectionPath: 'users',
+  //         doc: uid,
+  //         data: {
+  //           'orders': [orderData],
+  //         },
+  //       );
+  //     }
 
-    try {
-      final userDoc = await firebaseFirestore.getDoc(
-        collectionPath: 'users',
-        doc: uid,
-      );
+  //     log('Adding order: ${newOrder.toString()}');
+  //     log('✅ Order added successfully!');
+  //   } catch (e) {
+  //     log('❌ Error adding order: $e');
+  //   }
+  // }
 
-      final data = userDoc.data();
-      if (data == null || data['orders'] == null) return [];
+  // Future<List<AllProductModel>> getOrders() async {
+  //   final uid = await CacheData.getData(key: 'email');
+  //   if (uid == null) return [];
 
-      final List<dynamic> ordersList = data['orders'];
-      return ordersList.cast<Map<String, dynamic>>();
-    } catch (e) {
-      print('❌ Error getting orders: $e');
-      return [];
-    }
-  }
+  //   try {
+  //     final userDoc = await firebaseFirestore.getDoc(
+  //       collectionPath: 'users',
+  //       doc: uid,
+  //     );
+
+  //     final data = userDoc.data();
+  //     if (data == null || data['orders'] == null) return [];
+
+  //     final List<dynamic> ordersList = data['orders'];
+  //     final List<AllProductModel> allOrders = [];
+  //     for (var order in ordersList) {
+  //       List<dynamic> products = order['products'] as List<dynamic>? ?? [];
+  //       allOrders.addAll(
+  //         products.map((product) => AllProductModel.fromJson(product)),
+  //       );
+  //     }
+  //     return allOrders;
+  //   } catch (e) {
+  //     log('❌ Error getting orders: $e');
+  //     return [];
+  //   }
+  // }
 
   // Future<void> faceBookSignIn() async {
   //   emit(AuthLoading());
