@@ -8,6 +8,7 @@ import 'package:store_app2/core/utils/models/my_orders_model.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/controller/Bag%20cubit/bag_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
+import 'package:store_app2/features/presentation/bag/features/widgets/submit_order_info_body.dart';
 import 'package:store_app2/features/presentation/profile/controller/my_orders_cubit/my_order_cubit.dart';
 
 class BagView extends StatefulWidget {
@@ -75,6 +76,15 @@ class _BagViewState extends State<BagView> {
 
                         context.read<BagCubit>().submittedOrders();
                         await context.read<AuthCubit>().getUserData();
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SubmitOrderInfoBody(
+                              totalPrice: state.totalPrice,
+                            ),
+                          ),
+                        );
                       },
                       child: Text('Check Out'),
                     ),
