@@ -15,6 +15,7 @@ import 'package:store_app2/features/presentation/auth/features/view/auth_view.da
 import 'package:store_app2/features/presentation/bag/features/controller/Bag%20cubit/bag_cubit.dart';
 import 'package:store_app2/features/presentation/home/features/controller/cubit/all_product_cubit.dart';
 import 'package:store_app2/features/presentation/home/features/view/home_view.dart';
+import 'package:store_app2/features/presentation/profile/controller/my_orders_cubit/my_order_cubit.dart';
 import 'package:store_app2/features/presentation/shop/features/controller/categories_cubit/categories_cubit.dart';
 import 'package:store_app2/features/presentation/shop/features/controller/category_product_cubit/category_product_cubit.dart';
 import 'package:store_app2/firebase_options.dart';
@@ -45,6 +46,14 @@ class MainApp extends StatelessWidget {
             ),
           ),
         ),
+        BlocProvider(
+          create: (context) => MyOrderCubit(
+            firebaseFirestore: AuthDataBase(
+              firestore: FirebaseFirestore.instance,
+            ),
+          ),
+        ),
+
         BlocProvider(create: (context) => FavoriteCubit()),
 
         BlocProvider(

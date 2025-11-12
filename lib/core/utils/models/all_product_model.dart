@@ -21,7 +21,6 @@ class AllProductModel {
     required this.rating,
     required this.productName,
     required this.categoryName,
-
     required this.discountPercentage,
     this.quantity = 1,
   });
