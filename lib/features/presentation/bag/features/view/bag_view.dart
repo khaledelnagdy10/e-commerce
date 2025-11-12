@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/constants.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
+import 'package:store_app2/core/utils/models/my_orders_model.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/controller/Bag%20cubit/bag_cubit.dart';
 import 'package:store_app2/features/presentation/bag/features/widgets/bag_info_body.dart';
+import 'package:store_app2/features/presentation/profile/controller/my_orders_cubit/my_order_cubit.dart';
 
 class BagView extends StatefulWidget {
   const BagView({super.key});
@@ -63,13 +67,14 @@ class _BagViewState extends State<BagView> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
-                        context.read<BagCubit>().submittedOrders();
-                        context.read<AuthCubit>().addOrder(
-                          state.submittedOrdersList
-                              .map((product) => product.toJson())
-                              .toList(),
+                        final order = MyOrdersModel(
+                          products: state.bagList,
+                          createdAt: DateTime.now(),
                         );
-                        context.read<AuthCubit>().getUserData();
+                        context.read<MyOrderCubit>().addOrder(order);
+
+                        context.read<BagCubit>().submittedOrders();
+                        await context.read<AuthCubit>().getUserData();
                       },
                       child: Text('Check Out'),
                     ),
