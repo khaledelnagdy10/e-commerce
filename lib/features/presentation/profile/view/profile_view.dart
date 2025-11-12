@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:store_app2/core/utils/constants.dart';
 import 'package:store_app2/features/presentation/profile/widgets/my_orders_details_info_body.dart';
+import 'package:store_app2/features/presentation/profile/widgets/order_list_tile.dart';
 import 'package:store_app2/features/presentation/profile/widgets/personal_details_info_body.dart';
 
 class ProfileView extends StatelessWidget {
@@ -23,7 +24,7 @@ class ProfileView extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return MyOrdersDetailsInfoBody();
+                      return OrderListTile();
                     },
                   ),
                 );
