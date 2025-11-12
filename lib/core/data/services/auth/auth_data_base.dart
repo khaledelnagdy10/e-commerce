@@ -9,11 +9,12 @@ class AuthDataBase {
     required String collectionPath,
     required String doc,
     required Map<String, dynamic> data,
+    bool merge = false,
   }) async {
     return await FirebaseFirestore.instance
         .collection(collectionPath)
         .doc(doc)
-        .set(data);
+        .set(data, merge ? SetOptions(merge: true) : null);
   }
 
   Future<dynamic> add({
@@ -43,7 +44,9 @@ class AuthDataBase {
     await firestore.collection(collectionPath).doc(doc).update(data);
   }
 
-  Future<dynamic> getCollection({required String collectionPath}) async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getCollection({
+    required String collectionPath,
+  }) async {
     return await FirebaseFirestore.instance.collection(collectionPath).get();
   }
 }
