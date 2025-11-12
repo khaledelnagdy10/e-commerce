@@ -69,6 +69,13 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
                     title: Text('Email', style: Style.textStyle12grey),
                     subtitle: Text(userData['email']),
                   ),
+                  SizedBox(height: 10),
+                  ListTile(
+                    tileColor: Colors.white,
+                    title: Text('Address', style: Style.textStyle12grey),
+
+                    subtitle: Text(userData['address']),
+                  ),
                   SizedBox(height: 80),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
