@@ -15,6 +15,8 @@ class AuthView extends StatelessWidget {
   String fullName = '';
   String email = '';
   String password = '';
+  String address = '';
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -96,11 +98,21 @@ class AuthView extends StatelessWidget {
                     ),
                     const SizedBox(height: 40),
                     authType == 0
-                        ? CustomTextFormField(
-                            title: 'Full Name',
-                            onChanged: (value) {
-                              fullName = value;
-                            },
+                        ? Column(
+                            children: [
+                              CustomTextFormField(
+                                title: 'Full Name',
+                                onChanged: (value) {
+                                  fullName = value;
+                                },
+                              ),
+                              CustomTextFormField(
+                                title: 'Address',
+                                onChanged: (value) {
+                                  address = value;
+                                },
+                              ),
+                            ],
                           )
                         : SizedBox(height: 70),
                     CustomTextFormField(
@@ -171,6 +183,7 @@ class AuthView extends StatelessWidget {
                               fullName: fullName,
                               email: email,
                               password: password,
+                              address: address,
                             );
                           }
 
