@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:store_app2/core/data/services/auth/auth_service.dart';
 
 class AuthDataBase {
   final FirebaseFirestore firestore;

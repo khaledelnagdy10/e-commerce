@@ -132,8 +132,7 @@ class _AllOrdersState extends State<AllOrders> {
                                           style: Style.textStyle14grey,
                                         ),
                                         Text(
-                                          order
-                                              .status, // هنا نعرض status من MyOrdersModel
+                                          order.status,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: order.status == 'Delivered'

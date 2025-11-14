@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/constants.dart' show Style;
+import 'package:store_app2/core/utils/widgets/custom_text_form_field.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
+import 'package:store_app2/features/presentation/bag/features/widgets/change_address.dart';
 
-class CardOrderDetails extends StatelessWidget {
+class CardOrderDetails extends StatefulWidget {
   const CardOrderDetails({super.key});
+
+  @override
+  State<CardOrderDetails> createState() => _CardOrderDetailsState();
+}
+
+class _CardOrderDetailsState extends State<CardOrderDetails> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<AuthCubit>().userData;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +40,14 @@ class CardOrderDetails extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
                 InkWell(
+                  onTap: () {
+                    showBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return ChangeAddress();
+                      },
+                    );
+                  },
                   child: Text('Change', style: TextStyle(color: Colors.red)),
                 ),
               ],
