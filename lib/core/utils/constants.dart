@@ -22,7 +22,11 @@ abstract class Style {
     fontSize: 20,
     color: Colors.black,
   );
-
+  static const textStyleBold14Black = TextStyle(
+    fontSize: 14,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
   static const textStyleBold16Black = TextStyle(
     fontSize: 16,
     color: Colors.black,
