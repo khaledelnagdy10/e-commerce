@@ -46,71 +46,36 @@ class MyOrderCubit extends Cubit<MyOrderCubitState> {
       final orders = await firebaseFirestore.getCollection(
         collectionPath: 'users/$uid/orders',
       );
-      final ordersFromJson = orders.docs
-          .map((doc) => MyOrdersModel.fromJson(doc.data()))
-          .toList();
-      emit(MyOrderCubitAdded(orders: ordersFromJson));
+      final ordersFromJson = orders.docs.map((doc) {
+        final order = MyOrdersModel.fromJson(doc.data());
+        order.id = doc.id;
+        return order;
+      }).toList();
+      newOrder = ordersFromJson;
+      emit(MyOrderCubitAdded(orders: List.from(newOrder)));
+    } catch (e) {
+      emit(MyOrderCubitFailure(errMess: ErrorModel(errMessage: e.toString())));
+    }
+  }
+
+  Future updateOrderStatus(String orderId, String newStatus) async {
+    final uid = await CacheData.getData(key: 'email');
+    emit(MyOrderCubitLoading());
+    try {
+      await firebaseFirestore.update(
+        collectionPath: 'users/$uid/orders',
+        doc: orderId,
+        data: {'status': newStatus},
+      );
+
+      final index = newOrder.indexWhere((order) => order.id == orderId);
+      if (index != -1) {
+        newOrder[index].status = newStatus;
+      }
+
+      emit(MyOrderCubitAdded(orders: List.from(newOrder)));
     } catch (e) {
       emit(MyOrderCubitFailure(errMess: ErrorModel(errMessage: e.toString())));
     }
   }
 }
-
-//   final List newOrder = [];
-
-//   Future<void> addOrder(List<AllProductModel> products) async {
-//     final uid = await CacheData.getData(key: 'email');
-//     if (uid == null || products.isEmpty) return;
-
-//     final order = MyOrdersModel(products: products, createdAt: DateTime.now());
-
-//     try {
-//       await firebaseFirestore.update(
-//         collectionPath: 'users',
-//         doc: uid,
-//         data: {
-//           'orders': FieldValue.arrayUnion([order.toJson()]),
-//         },
-//       );
-
-//       // تحديث الـ list الداخلية
-//       newOrder.add(order);
-
-//       emit(
-//         MyOrderCubitAdded(myOrders: List.from(newOrder)),
-//       ); // emit كامل القائمة
-//       log('✅ Order added successfully: ${order.toJson()}');
-//     } catch (e) {
-//       log('❌ Error adding order: $e');
-//       rethrow;
-//     }
-//   }
-
-//   Future<void> getOrders() async {
-//     final uid = await CacheData.getData(key: 'email');
-//     if (uid == null) return;
-
-//     try {
-//       final userDoc = await firebaseFirestore.getDoc(
-//         collectionPath: 'users',
-//         doc: uid,
-//       );
-//       final data = userDoc.data();
-
-//       if (data == null || data['orders'] == null) {
-//         emit(MyOrderCubitAdded(myOrders: []));
-//         return;
-//       }
-
-//       final orders = (data['orders'] as List)
-//           .map((p) => MyOrdersModel.fromJson(p))
-//           .toList();
-
-//       emit(MyOrderCubitAdded(myOrders: orders));
-//       log('📦 Orders fetched: ${orders.length}');
-//     } catch (e) {
-//       log('❌ Error getting orders: $e');
-//       rethrow;
-//     }
-//   }
-// }
