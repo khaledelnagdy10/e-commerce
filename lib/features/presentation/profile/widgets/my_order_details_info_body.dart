@@ -99,6 +99,7 @@ class _MyOrderDetailsInfoBodyState extends State<MyOrderDetailsInfoBody> {
                                   );
                               widget.order.status = 'Cancelled';
                             }
+                            Navigator.pop(context);
                           },
                           child: Text(
                             'Cancelled',
@@ -145,7 +146,7 @@ class _MyOrderDetailsInfoBodyState extends State<MyOrderDetailsInfoBody> {
                                     widget.order.id!,
                                     'Delivered',
                                   );
-                              Navigator.pop(context, 'Delivered');
+                              Navigator.pop(context);
                             }
                           },
                           child: Text(

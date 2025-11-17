@@ -31,6 +31,7 @@ class _BagViewState extends State<BagView> {
         ),
         child: BlocBuilder<BagCubit, BagState>(
           builder: (context, state) {
+            final userData = context.read<AuthCubit>().userData;
             if (state is BagInitial) {
               return Center(
                 child: const Text(
@@ -39,6 +40,7 @@ class _BagViewState extends State<BagView> {
                 ),
               );
             }
+
             if (state is BagUpdated) {
               if (state.totalPrice == 0) {
                 return Center(
@@ -68,15 +70,6 @@ class _BagViewState extends State<BagView> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
-                        final order = MyOrdersModel(
-                          products: state.bagList,
-                          createdAt: DateTime.now(),
-                        );
-                        context.read<MyOrderCubit>().addOrder(order);
-
-                        context.read<BagCubit>().submittedOrders();
-                        await context.read<AuthCubit>().getUserData();
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(
