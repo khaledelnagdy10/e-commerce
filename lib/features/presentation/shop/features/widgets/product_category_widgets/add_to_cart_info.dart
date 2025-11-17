@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
 import 'package:store_app2/core/utils/constants.dart';
+import 'package:store_app2/core/utils/widgets/error_alert_dialog.dart';
 import 'package:store_app2/features/presentation/bag/features/controller/Bag%20cubit/bag_cubit.dart';
 
 class AddToCartInfoBody extends StatefulWidget {
@@ -80,43 +81,10 @@ class _AddToCartInfoBodyState extends State<AddToCartInfoBody> {
                   if (selectedIndex == -1) {
                     showDialog(
                       context: context,
-                      builder: (context) => AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 20,
-                        ),
-                        content: Row(
-                          children: [
-                            Icon(
-                              Icons.warning_amber_rounded,
-                              color: Colors.red,
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                'Please choose a size before adding to cart.',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ],
-                        ),
-                        actions: [
-                          Center(
-                            child: TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text(
-                                'OK',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      builder: (context) => ErrorAlertDialog(
+                        warningText:
+                            'Please choose a size before adding to cart.',
+                        onPressed: () => Navigator.pop(context),
                       ),
                     );
                   } else {
