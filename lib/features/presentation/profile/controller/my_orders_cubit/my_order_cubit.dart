@@ -30,6 +30,7 @@ class MyOrderCubit extends Cubit<MyOrderCubitState> {
         data: order.toJson(),
         merge: true,
       );
+      order.id = orderId;
       newOrder.add(order);
       emit(MyOrderCubitAdded(orders: List.from(newOrder)));
       log('${order.toJson()}');
@@ -71,6 +72,27 @@ class MyOrderCubit extends Cubit<MyOrderCubitState> {
       final index = newOrder.indexWhere((order) => order.id == orderId);
       if (index != -1) {
         newOrder[index].status = newStatus;
+      }
+
+      emit(MyOrderCubitAdded(orders: List.from(newOrder)));
+    } catch (e) {
+      emit(MyOrderCubitFailure(errMess: ErrorModel(errMessage: e.toString())));
+    }
+  }
+
+  Future updateOrderAddress(String orderId, String newAddress) async {
+    final uid = await CacheData.getData(key: 'email');
+    emit(MyOrderCubitLoading());
+    try {
+      await firebaseFirestore.update(
+        collectionPath: 'users/$uid/orders',
+        doc: orderId,
+        data: {'address': newAddress},
+      );
+
+      final index = newOrder.indexWhere((order) => order.id == orderId);
+      if (index != -1) {
+        newOrder[index].address = newAddress;
       }
 
       emit(MyOrderCubitAdded(orders: List.from(newOrder)));
