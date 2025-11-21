@@ -44,7 +44,7 @@ class _SearchProductViewState extends State<SearchProductView> {
               title: 'Enter product ',
               onChanged: (product) {
                 setState(() {
-                  searchQuery = product;
+                  searchQuery = product!;
                 });
               },
             ),

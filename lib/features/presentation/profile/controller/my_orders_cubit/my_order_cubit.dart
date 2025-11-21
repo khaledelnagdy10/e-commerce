@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:store_app2/core/data/cache_data/local_cache_data.dart';
 import 'package:store_app2/core/data/services/auth/auth_data_base.dart';
-import 'package:store_app2/core/utils/models/all_product_model.dart';
+import 'package:store_app2/core/utils/models/address_model.dart';
 import 'package:store_app2/core/utils/models/my_orders_model.dart';
 import 'package:store_app2/core/utils/widgets/error_model.dart';
 
@@ -24,15 +24,17 @@ class MyOrderCubit extends Cubit<MyOrderCubitState> {
           .collection('users/$uid/orders')
           .doc()
           .id;
+      order.id = orderId;
+
       await firebaseFirestore.set(
         collectionPath: 'users/$uid/orders',
         doc: orderId,
         data: order.toJson(),
         merge: true,
       );
-      order.id = orderId;
       newOrder.add(order);
       emit(MyOrderCubitAdded(orders: List.from(newOrder)));
+
       log('${order.toJson()}');
     } catch (e) {
       emit(MyOrderCubitFailure(errMess: ErrorModel(errMessage: e.toString())));
@@ -80,19 +82,40 @@ class MyOrderCubit extends Cubit<MyOrderCubitState> {
     }
   }
 
-  Future updateOrderAddress(String orderId, String newAddress) async {
+  Future updateOrderAddress(String orderId, AddressModel newAddress) async {
     final uid = await CacheData.getData(key: 'email');
     emit(MyOrderCubitLoading());
     try {
       await firebaseFirestore.update(
         collectionPath: 'users/$uid/orders',
         doc: orderId,
-        data: {'address': newAddress},
+        data: {'address': newAddress.toJson()},
       );
 
       final index = newOrder.indexWhere((order) => order.id == orderId);
       if (index != -1) {
         newOrder[index].address = newAddress;
+      }
+
+      emit(MyOrderCubitAdded(orders: List.from(newOrder)));
+    } catch (e) {
+      emit(MyOrderCubitFailure(errMess: ErrorModel(errMessage: e.toString())));
+    }
+  }
+
+  Future updateOrderName(String orderId, String newName) async {
+    final uid = await CacheData.getData(key: 'email');
+    emit(MyOrderCubitLoading());
+    try {
+      await firebaseFirestore.update(
+        collectionPath: 'users/$uid/orders',
+        doc: orderId,
+        data: {'name': newName},
+      );
+
+      final index = newOrder.indexWhere((order) => order.id == orderId);
+      if (index != -1) {
+        newOrder[index].name = newName;
       }
 
       emit(MyOrderCubitAdded(orders: List.from(newOrder)));

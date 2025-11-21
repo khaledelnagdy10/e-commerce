@@ -1,15 +1,18 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:store_app2/core/utils/models/address_model.dart';
 import 'package:store_app2/core/utils/models/all_product_model.dart';
 
 class MyOrdersModel {
   String? id;
-  String? address;
+  String? name;
+
+  AddressModel address;
   final List<AllProductModel> products;
   final DateTime createdAt;
   String status;
 
   MyOrdersModel({
     this.id,
+    this.name,
     required this.address,
     required this.products,
     required this.createdAt,
@@ -23,7 +26,9 @@ class MyOrdersModel {
           .toList(),
       createdAt: DateTime.parse(json['createdAt']),
       status: json['status'] ?? 'Pending',
-      address: json['address'] ?? '',
+      id: json['id'],
+      name: json['name'] ?? '',
+      address: AddressModel.fromJson(json['address'] ?? {}),
     );
   }
 
@@ -32,7 +37,9 @@ class MyOrdersModel {
       'products': products.map((p) => p.toJson()).toList(),
       'createdAt': createdAt.toIso8601String(),
       'status': status,
-      'address': address,
+      'id': id,
+      'name': name,
+      'address': address.toJson(),
     };
   }
 }

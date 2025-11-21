@@ -7,6 +7,7 @@ import 'package:store_app2/core/data/services/auth/auth_data_base.dart';
 
 import 'package:store_app2/core/data/services/auth/auth_service.dart';
 import 'package:store_app2/core/data/cache_data/local_cache_data.dart';
+import 'package:store_app2/core/utils/models/address_model.dart';
 import 'package:store_app2/core/utils/widgets/error_model.dart';
 
 part 'auth_state.dart';
@@ -22,7 +23,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String password,
     required String fullName,
-    required String address,
+    required AddressModel address,
   }) async {
     emit(AuthLoading());
 
@@ -41,7 +42,7 @@ class AuthCubit extends Cubit<AuthState> {
           'name': fullName,
           'email': email,
           'password': password,
-          'address': address,
+          'address': address.toJson(),
           'googleAccount': false,
         },
       );
@@ -83,8 +84,7 @@ class AuthCubit extends Cubit<AuthState> {
           'name': userCredential.user!.displayName,
           'email': userCredential.user!.email,
           'googleAccount': true,
-          'address':
-              'No Address added from google account ,\t please add your address',
+          'address': AddressModel(city: "", region: "", street: "").toJson(),
           'password': '',
         },
       );

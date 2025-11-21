@@ -70,7 +70,6 @@ class _BagInfoBodyState extends State<MyOrdersProductCardWide> {
                     ],
                   ),
 
-                  // SizedBox(height: 5),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

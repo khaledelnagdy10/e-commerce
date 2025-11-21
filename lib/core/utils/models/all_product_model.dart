@@ -22,7 +22,7 @@ class AllProductModel {
     required this.productName,
     required this.categoryName,
     required this.discountPercentage,
-    this.quantity = 1,
+    required this.quantity,
   });
 
   factory AllProductModel.fromJson(Map<String, dynamic> json) {
@@ -47,6 +47,7 @@ class AllProductModel {
           (json['tags'] != null && (json['tags']).isNotEmpty
               ? json['tags'][0].toString()
               : 'unknown'),
+      quantity: json['quantity'] ?? 1,
     );
   }
 }

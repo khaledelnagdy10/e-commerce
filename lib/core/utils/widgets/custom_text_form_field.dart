@@ -10,7 +10,7 @@ class CustomTextFormField extends StatelessWidget {
   });
 
   final String title;
-  final Function(String) onChanged;
+  final Function(String?) onChanged;
   final String? initialValue;
   final bool readOnly;
   @override

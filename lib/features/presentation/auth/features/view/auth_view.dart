@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/constants.dart';
+import 'package:store_app2/core/utils/models/address_model.dart';
 import 'package:store_app2/core/utils/widgets/custom_scaffold_messenger.dart';
 import 'package:store_app2/core/utils/widgets/custom_text_form_field.dart';
 import 'package:store_app2/core/utils/widgets/image_assets.dart';
@@ -16,7 +17,7 @@ class AuthView extends StatelessWidget {
   String fullName = '';
   String email = '';
   String password = '';
-  String address = '';
+  Map<String, dynamic> address = {};
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -104,13 +105,25 @@ class AuthView extends StatelessWidget {
                               CustomTextFormField(
                                 title: 'Full Name',
                                 onChanged: (value) {
-                                  fullName = value;
+                                  fullName = value!;
                                 },
                               ),
                               CustomTextFormField(
-                                title: 'Address',
-                                onChanged: (value) {
-                                  address = value;
+                                title: 'City',
+                                onChanged: (city) {
+                                  address['city'] = city!;
+                                },
+                              ),
+                              CustomTextFormField(
+                                title: 'Region',
+                                onChanged: (region) {
+                                  address['region'] = region!;
+                                },
+                              ),
+                              CustomTextFormField(
+                                title: 'Street',
+                                onChanged: (street) {
+                                  address['street'] = street!;
                                 },
                               ),
                             ],
@@ -119,13 +132,13 @@ class AuthView extends StatelessWidget {
                     CustomTextFormField(
                       title: 'Email',
                       onChanged: (value) {
-                        email = value;
+                        email = value!;
                       },
                     ),
                     CustomTextFormField(
                       title: 'password',
                       onChanged: (value) {
-                        password = value;
+                        password = value!;
                       },
                     ),
                     Row(
@@ -184,7 +197,7 @@ class AuthView extends StatelessWidget {
                               fullName: fullName,
                               email: email,
                               password: password,
-                              address: address,
+                              address: AddressModel.fromJson(address),
                             );
                           }
 

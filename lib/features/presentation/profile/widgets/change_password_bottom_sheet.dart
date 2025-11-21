@@ -28,15 +28,15 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
         children: [
           CustomTextFormField(
             title: 'current password',
-            onChanged: (String value) {
-              oldPassword = value;
+            onChanged: (value) {
+              oldPassword = value!;
             },
           ),
           SizedBox(height: 15),
           CustomTextFormField(
             title: 'new password',
-            onChanged: (String value) {
-              newPassword = value;
+            onChanged: (value) {
+              newPassword = value!;
             },
           ),
           SizedBox(height: 200),

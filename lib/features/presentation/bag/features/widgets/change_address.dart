@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app2/core/data/cache_data/local_cache_data.dart';
-import 'package:store_app2/core/utils/constants.dart';
+import 'package:store_app2/core/utils/models/address_model.dart';
+
 import 'package:store_app2/core/utils/models/my_orders_model.dart';
 import 'package:store_app2/core/utils/widgets/custom_text_form_field.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
@@ -10,12 +10,12 @@ import 'package:store_app2/features/presentation/profile/controller/my_orders_cu
 class ChangeAddress extends StatelessWidget {
   ChangeAddress({super.key, required this.order});
   final MyOrdersModel order;
-  String newAddress = '';
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    String userAddress = context.read<AuthCubit>().userData['address'];
-    newAddress = userAddress;
+    final userAddress = context.read<AuthCubit>().userData['address'];
+    order.address = AddressModel.fromJson(userAddress);
     return SizedBox(
       height: 350,
       child: Padding(
@@ -28,7 +28,7 @@ class ChangeAddress extends StatelessWidget {
             children: [
               CustomTextFormField(
                 title: 'Your address',
-                initialValue: order.address,
+                initialValue: order.address.toString(),
                 readOnly: true,
                 onChanged: (_) {
                   return;
@@ -36,10 +36,25 @@ class ChangeAddress extends StatelessWidget {
               ),
               SizedBox(height: 15),
               CustomTextFormField(
-                title: 'New address',
+                title: 'City',
 
-                onChanged: (value) {
-                  newAddress = value;
+                onChanged: (city) {
+                  order.address.city = city!;
+                },
+              ),
+              CustomTextFormField(
+                title: 'Region',
+
+                onChanged: (region) {
+                  order.address.region = region!;
+                },
+              ),
+
+              CustomTextFormField(
+                title: 'Street',
+
+                onChanged: (street) {
+                  order.address.street = street!;
                 },
               ),
               Spacer(flex: 4),
@@ -52,7 +67,7 @@ class ChangeAddress extends StatelessWidget {
                       _formKey.currentState!.save();
                       await context.read<MyOrderCubit>().updateOrderAddress(
                         order.id!,
-                        newAddress,
+                        order.address,
                       );
 
                       Navigator.pop(context);

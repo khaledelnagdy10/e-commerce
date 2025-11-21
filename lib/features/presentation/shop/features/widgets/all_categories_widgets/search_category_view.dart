@@ -33,7 +33,7 @@ class _SearchCategoryViewState extends State<SearchCategoryView> {
               title: 'Enter product ',
               onChanged: (category) {
                 setState(() {
-                  searchQuery = category;
+                  searchQuery = category!;
                 });
               },
             ),
