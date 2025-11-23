@@ -31,8 +31,12 @@ class _ProductsCategoryListViewBuilderState
 
           if (widget.sortType == 0) {
             sortedList.sort((a, b) => a.price.compareTo(b.price));
-          } else {
+          }
+          if (widget.sortType == 1) {
             sortedList.sort((a, b) => b.price.compareTo(a.price));
+          }
+          if (widget.sortType == 2) {
+            sortedList.sort((a, b) => b.rating.compareTo(a.rating));
           }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

@@ -15,7 +15,7 @@ class CategoryProductInfoBody extends StatefulWidget {
 }
 
 class _CategoryProductInfoBodyState extends State<CategoryProductInfoBody> {
-  int sortPriceType = 0;
+  int sortType = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,12 @@ class _CategoryProductInfoBodyState extends State<CategoryProductInfoBody> {
                                         ),
                                         SizedBox(height: 20),
                                         ListTile(
-                                          onTap: () {},
+                                          onTap: () {
+                                            setState(() {
+                                              sortType = 2;
+                                            });
+                                            Navigator.pop(context);
+                                          },
                                           title: Text('Popular'),
                                         ),
                                         ListTile(
@@ -101,15 +106,30 @@ class _CategoryProductInfoBodyState extends State<CategoryProductInfoBody> {
                                           title: Text('Newest'),
                                         ),
                                         ListTile(
-                                          onTap: () {},
+                                          onTap: () {
+                                            setState(() {
+                                              sortType = 2;
+                                            });
+                                            Navigator.pop(context);
+                                          },
                                           title: Text('Customer review'),
                                         ),
                                         ListTile(
-                                          onTap: () {},
+                                          onTap: () {
+                                            setState(() {
+                                              sortType = 1;
+                                            });
+                                            Navigator.pop(context);
+                                          },
                                           title: Text('Price: highest to low'),
                                         ),
                                         ListTile(
-                                          onTap: () {},
+                                          onTap: () {
+                                            setState(() {
+                                              sortType = 0;
+                                            });
+                                            Navigator.pop(context);
+                                          },
                                           title: Text('Price: lowest to high'),
                                         ),
                                       ],
@@ -125,7 +145,7 @@ class _CategoryProductInfoBodyState extends State<CategoryProductInfoBody> {
                           IconButton(
                             onPressed: () {
                               setState(() {
-                                sortPriceType = sortPriceType == 0 ? 1 : 0;
+                                sortType = sortType == 0 ? 1 : 0;
                               });
                             },
                             icon: FaIcon(
@@ -134,7 +154,7 @@ class _CategoryProductInfoBodyState extends State<CategoryProductInfoBody> {
                             ),
                           ),
 
-                          sortPriceType == 0
+                          sortType == 0
                               ? Text('Price lowest to highest')
                               : Text('Price highest to lowest'),
                         ],
@@ -148,7 +168,7 @@ class _CategoryProductInfoBodyState extends State<CategoryProductInfoBody> {
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: ProductsCategoryListViewBuilder(sortType: sortPriceType),
+            child: ProductsCategoryListViewBuilder(sortType: sortType),
           ),
         ],
       ),
