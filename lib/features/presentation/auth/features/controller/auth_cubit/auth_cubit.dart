@@ -84,9 +84,9 @@ class AuthCubit extends Cubit<AuthState> {
           'name': userCredential.user!.displayName,
           'email': userCredential.user!.email,
           'googleAccount': true,
-          'address': AddressModel(city: "", region: "", street: "").toJson(),
           'password': '',
         },
+        merge: true,
       );
       await firebaseFirestore.getDoc(
         collectionPath: 'users',
