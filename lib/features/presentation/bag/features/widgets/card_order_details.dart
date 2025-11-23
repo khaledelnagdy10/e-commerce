@@ -7,7 +7,7 @@ import 'package:store_app2/core/utils/models/address_model.dart';
 import 'package:store_app2/core/utils/models/my_orders_model.dart';
 import 'package:store_app2/core/utils/widgets/custom_text_form_field.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
-import 'package:store_app2/features/presentation/bag/features/widgets/change_address.dart';
+import 'package:store_app2/features/presentation/bag/features/widgets/change_order_address.dart';
 import 'package:store_app2/features/presentation/profile/controller/my_orders_cubit/my_order_cubit.dart';
 
 class CardOrderDetails extends StatefulWidget {
@@ -59,7 +59,7 @@ class _CardOrderDetailsState extends State<CardOrderDetails> {
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (context) {
-                                    return ChangeAddress(order: order);
+                                    return ChangeOrderAddress(order: order);
                                   },
                                 );
                               },

@@ -26,6 +26,7 @@ class _SubmitOrderViewState extends State<SubmitOrderView> {
     context.read<MyOrderCubit>().getOrders();
   }
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,78 +43,95 @@ class _SubmitOrderViewState extends State<SubmitOrderView> {
           builder: (context, state) {
             if (state is BagUpdated) {
               return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Shipping address', style: Style.textStyleBold16Black),
-                    SizedBox(height: 10),
-                    CardOrderDetails(),
-                    SizedBox(height: 30),
-                    Text('Delivery method', style: Style.textStyleBold20Black),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ImageAssets(
-                          url: 'assets/images/dhl.png',
-                          fit: BoxFit.none,
-                        ),
-                        ImageAssets(
-                          url: 'assets/images/usps.png',
-                          fit: BoxFit.none,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 40),
-                    PriceDetails(text: 'Order', price: widget.totalPrice),
-                    PriceDetails(text: 'Delivery', price: 20),
-                    PriceDetails(
-                      text: 'Order',
-                      price: (widget.totalPrice + 20),
-                    ),
-
-                    SizedBox(height: 10),
-                    SizedBox(
-                      height: 45,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          final lastOrder = context
-                              .read<MyOrderCubit>()
-                              .newOrder
-                              .last;
-                          if (state.bagList.isNotEmpty) {
-                            await context.read<AuthCubit>().getUserData();
-
-                            final orderModel = MyOrdersModel(
-                              products: state.bagList,
-                              createdAt: DateTime.now(),
-                              address: lastOrder.address,
-                              name: lastOrder.name,
-                            );
-
-                            context.read<MyOrderCubit>().addOrder(orderModel);
-
-                            context.read<BagCubit>().submittedOrders();
-                            Navigator.pop(context);
-                          }
-                          if (state.bagList.isEmpty) {
-                            showDialog(
-                              context: context,
-                              builder: (context) => ErrorAlertDialog(
-                                warningText: 'Error try Product Already Added',
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            );
-                          }
-                        },
-                        child: Text('SUBMIT ORDER'),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Shipping address',
+                        style: Style.textStyleBold16Black,
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 10),
+                      CardOrderDetails(),
+                      SizedBox(height: 30),
+                      Text(
+                        'Delivery method',
+                        style: Style.textStyleBold20Black,
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ImageAssets(
+                            url: 'assets/images/dhl.png',
+                            fit: BoxFit.none,
+                          ),
+                          ImageAssets(
+                            url: 'assets/images/usps.png',
+                            fit: BoxFit.none,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 40),
+                      PriceDetails(text: 'Order', price: widget.totalPrice),
+                      PriceDetails(text: 'Delivery', price: 20),
+                      PriceDetails(
+                        text: 'Order',
+                        price: (widget.totalPrice + 20),
+                      ),
+
+                      SizedBox(height: 10),
+                      SizedBox(
+                        height: 45,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
+                            }
+                            if (!formKey.currentState!.validate()) {
+                              'please enter data';
+                              return;
+                            }
+                            final lastOrder = context
+                                .read<MyOrderCubit>()
+                                .newOrder
+                                .last;
+                            if (state.bagList.isNotEmpty) {
+                              await context.read<AuthCubit>().getUserData();
+
+                              final orderModel = MyOrdersModel(
+                                products: state.bagList,
+                                createdAt: DateTime.now(),
+                                address: lastOrder.address,
+                                name: lastOrder.name,
+                              );
+
+                              context.read<MyOrderCubit>().addOrder(orderModel);
+
+                              context.read<BagCubit>().submittedOrders();
+                              Navigator.pop(context);
+                            }
+                            if (state.bagList.isEmpty) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => ErrorAlertDialog(
+                                  warningText:
+                                      'Error try Product Already Added',
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              );
+                            }
+                          },
+                          child: Text('SUBMIT ORDER'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }
