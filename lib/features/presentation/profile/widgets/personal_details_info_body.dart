@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app2/core/utils/constants.dart';
+import 'package:store_app2/features/presentation/profile/widgets/change_user_name.dart';
 import 'package:store_app2/features/presentation/auth/features/controller/auth_cubit/auth_cubit.dart';
-import 'package:store_app2/features/presentation/profile/widgets/change_password_bottom_sheet.dart';
+import 'package:store_app2/features/presentation/profile/widgets/change_password.dart';
+import 'package:store_app2/features/presentation/profile/widgets/change_user_address.dart';
 
 class PersonalDetailsInfoBody extends StatefulWidget {
   const PersonalDetailsInfoBody({super.key});
@@ -15,8 +18,8 @@ class PersonalDetailsInfoBody extends StatefulWidget {
 class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
   @override
   void initState() {
-    context.read<AuthCubit>().getUserData();
     super.initState();
+    context.read<AuthCubit>().getUserData();
   }
 
   @override
@@ -33,6 +36,7 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           final userData = context.read<AuthCubit>().userData;
+          final userAddress = userData['address'];
           if (userData.isEmpty) {
             return Center(child: Text('Loading profile...'));
           }
@@ -59,22 +63,75 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
                   SizedBox(height: 35),
 
                   ListTile(
-                    tileColor: Colors.white,
-                    title: Text('Full name', style: Style.textStyle12grey),
-                    subtitle: Text(userData['name']),
-                  ),
-                  SizedBox(height: 20),
-                  ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(10),
+                    ),
+                    minTileHeight: 40,
                     tileColor: Colors.white,
                     title: Text('Email', style: Style.textStyle12grey),
                     subtitle: Text(userData['email']),
                   ),
+                  SizedBox(height: 20),
+                  ListTile(
+                    minVerticalPadding: 15,
+                    titleTextStyle: Style.textStyle12grey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(10),
+                    ),
+                    minTileHeight: 40,
+                    tileColor: Colors.white,
+
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Full name'),
+                        GestureDetector(
+                          onTap: () => showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return ChangeUserName();
+                            },
+                          ),
+                          child: Text('edit'),
+                        ),
+                      ],
+                    ),
+
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: Text(userData['name']),
+                    ),
+                  ),
                   SizedBox(height: 10),
                   ListTile(
+                    minVerticalPadding: 15,
+                    titleTextStyle: Style.textStyle12grey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(10),
+                    ),
+                    minTileHeight: 40,
                     tileColor: Colors.white,
-                    title: Text('Address', style: Style.textStyle12grey),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Address', style: Style.textStyle12grey),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return ChangeUserAddress();
+                              },
+                            );
+                          },
+                          child: Text('edit'),
+                        ),
+                      ],
+                    ),
 
-                    subtitle: Text(userData['address']),
+                    subtitle: Text(
+                      "${userAddress['city']}, ${userAddress['region']}, ${userAddress['street']}",
+                    ),
                   ),
                   SizedBox(height: 80),
                   Row(
@@ -86,7 +143,7 @@ class _PersonalDetailsInfoBodyState extends State<PersonalDetailsInfoBody> {
                           showModalBottomSheet(
                             context: context,
                             builder: (context) {
-                              return ChangePasswordBottomSheet();
+                              return ChangePassword();
                             },
                           );
                         },
